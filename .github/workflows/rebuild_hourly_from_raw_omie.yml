@@ -1,0 +1,53 @@
+name: Rebuild hourly OMIE prices from raw files
+
+on:
+  # Run manually from the Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: write   # allow this workflow to push commits
+
+jobs:
+  rebuild-hourly:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # so we can push back to the same branch
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas duckdb pyarrow
+
+      - name: Rebuild hourly dataset from raw OMIE files
+        run: |
+          python scripts/rebuild_hourly_from_raw_omie.py
+
+      - name: Commit and push changes (if any)
+        run: |
+          git status
+
+          # If nothing changed, exit quietly
+          if [[ -z "$(git status --porcelain)" ]]; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add \
+            processed/all_omie_prices.csv \
+            processed/all_omie_prices.parquet \
+            processed/omie_prices.duckdb
+
+          git commit -m "Rebuild hourly OMIE dataset from raw daily files"
+          git push origin HEAD:${GITHUB_REF#refs/heads/}
