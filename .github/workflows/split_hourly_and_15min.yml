@@ -1,7 +1,10 @@
 name: Split OMIE hourly and 15min data
 
 on:
-  workflow_dispatch:  # run manually from GitHub UI
+  workflow_dispatch:  # run manually from the Actions tab
+
+permissions:
+  contents: write     # allow this workflow to push commits
 
 jobs:
   split-data:
@@ -24,3 +27,29 @@ jobs:
       - name: Split data into hourly and 15min and write all formats
         run: |
           python scripts/split_hourly_and_15min.py
+
+      - name: Commit and push changes (if any)
+        run: |
+          # Show status for debugging
+          git status
+
+          # If there are no changes, stop here
+          if [[ -z "$(git status --porcelain)" ]]; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          # Configure commit identity for the bot
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Add the files we expect to change / be created
+          git add processed/15min \
+                  processed/all_omie_prices_hourly_until_2025-09-30.csv \
+                  processed/all_omie_prices_hourly_until_2025-09-30.parquet \
+                  processed/omie_prices_hourly_until_2025-09-30.duckdb
+
+          git commit -m "Update 15-min and hourly OMIE processed datasets"
+
+          # Push back to the same branch that triggered the workflow
+          git push origin HEAD:${GITHUB_REF#refs/heads/}
