@@ -76,8 +76,11 @@ def parse_omie_raw_file(path: Path) -> pd.DataFrame:
       data/marginalpdbc_20251001.1  or  data/marginalpdbc_20251001.2
 
     Lines look like:
+      MARGINALPDBC;
       2025;10;01;1;105.1;105.1;
-      year;month;day;period;price_main;price_alt;[empty]
+
+    We force pandas to expect 7 columns so the first line (2 fields) doesn't
+    cause a ParserError – missing columns are filled with NaN.
 
     Returns DataFrame:
       year, month, day, period, price_main, price_alt
@@ -89,13 +92,14 @@ def parse_omie_raw_file(path: Path) -> pd.DataFrame:
         sep=";",
         header=None,
         engine="python",
+        names=list(range(7)),   # force 7 columns
     )
 
     # Keep rows where first column looks like a year (4 digits)
     mask = df_raw[0].astype(str).str.match(r"^\d{4}$")
     df_raw = df_raw[mask].copy()
 
-    # Only first 6 columns
+    # Only first 6 columns: year, month, day, period, price_main, price_alt
     df_raw = df_raw.iloc[:, :6]
     df_raw.columns = [
         "year",
@@ -105,6 +109,17 @@ def parse_omie_raw_file(path: Path) -> pd.DataFrame:
         "price_main",
         "price_alt",
     ]
+
+    # Types
+    df_raw["year"] = df_raw["year"].astype(int)
+    df_raw["month"] = df_raw["month"].astype(int)
+    df_raw["day"] = df_raw["day"].astype(int)
+    df_raw["period"] = df_raw["period"].astype(int)
+    df_raw["price_main"] = df_raw["price_main"].astype(float)
+    df_raw["price_alt"] = df_raw["price_alt"].astype(float)
+
+    return df_raw
+
 
     # Types
     df_raw["year"] = df_raw["year"].astype(int)
