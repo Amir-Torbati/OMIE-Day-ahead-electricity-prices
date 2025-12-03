@@ -1,346 +1,240 @@
 #!/usr/bin/env python
 
+import os
 import re
 from pathlib import Path
+from datetime import datetime, date
 
 import duckdb
 import pandas as pd
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-PROCESSED = REPO_ROOT / "processed"
 DATA_DIR = REPO_ROOT / "data"
+PROCESSED_DIR = REPO_ROOT / "processed"
 
-ALL_CSV = PROCESSED / "all_omie_prices.csv"
-ALL_PARQUET = PROCESSED / "all_omie_prices.parquet"
-ALL_DUCKDB = PROCESSED / "omie_prices.duckdb"
+CSV_PATH = PROCESSED_DIR / "all_omie_prices.csv"
+PARQUET_PATH = PROCESSED_DIR / "all_omie_prices.parquet"
+DUCKDB_PATH = PROCESSED_DIR / "omie_prices.duckdb"
 
-CHANGE_DATE = pd.Timestamp("2025-10-01")
+# Date when OMIE switched to 15-min (delivery date)
+CHANGE_DATE = date(2025, 10, 1)
 
 
 # ---------- helpers ----------
 
-def load_all_prices():
+def parse_daily_file(filepath: Path) -> pd.DataFrame:
     """
-    Load processed/all_omie_prices.csv and return:
-      - df_all with canonical columns (year, month, day, period, price_main, price_alt, timestamp, zone)
-      - has_header: whether CSV originally had header row
-      - orig_cols: original column names (so we can restore structure)
-    """
+    Parse a raw OMIE file like marginalpdbc_YYYYMMDD.1/.2
 
-    if not ALL_CSV.exists():
-        raise FileNotFoundError(f"{ALL_CSV} not found")
+    This matches your existing clean_file() logic:
 
-    # Peek at first line to detect if there's a header
-    preview = pd.read_csv(ALL_CSV, nrows=5, header=None)
-    first_val = str(preview.iloc[0, 0])
+      - sep=";"
+      - skip first line (MARGINALPDBC;)
+      - drop any rows containing '*'
+      - drop column 6
+      - columns: Year, Month, Day, Period, Price1, Price2
 
-    try:
-        float(first_val)
-        has_header = False
-    except ValueError:
-        has_header = True
-
-    if has_header:
-        df_raw = pd.read_csv(ALL_CSV, header=0)
-    else:
-        df_raw = pd.read_csv(ALL_CSV, header=None)
-
-    orig_cols = list(df_raw.columns)
-
-    if df_raw.shape[1] < 8:
-        raise ValueError(
-            f"Expected at least 8 columns in {ALL_CSV}, found {df_raw.shape[1]}"
-        )
-
-    df = df_raw.copy()
-
-    # Canonical names for first 8 columns
-    col_map = {
-        df.columns[0]: "year",
-        df.columns[1]: "month",
-        df.columns[2]: "day",
-        df.columns[3]: "period",
-        df.columns[4]: "price_main",
-        df.columns[5]: "price_alt",
-        df.columns[6]: "timestamp",
-        df.columns[7]: "zone",
-    }
-    df = df.rename(columns=col_map)
-
-    return df, has_header, orig_cols
-
-
-def parse_omie_raw_file(path: Path) -> pd.DataFrame:
-    """
-    Read one OMIE daily raw file like:
-      data/marginalpdbc_20251001.1  or  data/marginalpdbc_20251001.2
-
-    Lines look like:
-      MARGINALPDBC;
-      2025;10;01;1;105.1;105.1;
-
-    We force pandas to expect 7 columns so the first line (2 fields) doesn't
-    cause a ParserError – missing columns are filled with NaN.
-
-    Returns DataFrame:
-      year, month, day, period, price_main, price_alt
-      (96 rows, period 1..96)
+    BUT we do NOT turn Period into hours here. We keep the 1..96 periods
+    and let a separate function aggregate to hourly.
     """
 
-    df_raw = pd.read_csv(
-        path,
+    df = pd.read_csv(
+        filepath,
         sep=";",
+        skiprows=1,
         header=None,
         engine="python",
-        names=list(range(7)),   # force 7 columns
     )
 
-    # Keep rows where first column looks like a year (4 digits)
-    mask = df_raw[0].astype(str).str.match(r"^\d{4}$")
-    df_raw = df_raw[mask].copy()
+    # Drop rows with any "*" (same as your old code)
+    mask_star = df.apply(lambda x: x.astype(str).str.contains(r"\*").any(), axis=1)
+    df = df[~mask_star]
 
-    # Only first 6 columns: year, month, day, period, price_main, price_alt
-    df_raw = df_raw.iloc[:, :6]
-    df_raw.columns = [
-        "year",
-        "month",
-        "day",
-        "period",
-        "price_main",
-        "price_alt",
-    ]
+    # Make sure we at least have 7 cols, drop the last one (duplicate/empty)
+    if df.shape[1] < 7:
+        raise ValueError(f"Unexpected column count in {filepath}: {df.shape[1]}")
+
+    df = df.drop(columns=[6])
+
+    df.columns = ["Year", "Month", "Day", "Period", "Price1", "Price2"]
 
     # Types
-    df_raw["year"] = df_raw["year"].astype(int)
-    df_raw["month"] = df_raw["month"].astype(int)
-    df_raw["day"] = df_raw["day"].astype(int)
-    df_raw["period"] = df_raw["period"].astype(int)
-    df_raw["price_main"] = df_raw["price_main"].astype(float)
-    df_raw["price_alt"] = df_raw["price_alt"].astype(float)
+    df["Year"] = df["Year"].astype(int)
+    df["Month"] = df["Month"].astype(int)
+    df["Day"] = df["Day"].astype(int)
+    df["Period"] = df["Period"].astype(int)
+    df["Price1"] = df["Price1"].astype(float)
+    df["Price2"] = df["Price2"].astype(float)
 
-    return df_raw
-
-
-    # Types
-    df_raw["year"] = df_raw["year"].astype(int)
-    df_raw["month"] = df_raw["month"].astype(int)
-    df_raw["day"] = df_raw["day"].astype(int)
-    df_raw["period"] = df_raw["period"].astype(int)
-    df_raw["price_main"] = df_raw["price_main"].astype(float)
-    df_raw["price_alt"] = df_raw["price_alt"].astype(float)
-
-    return df_raw
+    return df
 
 
-def hourly_from_raw_file(path: Path) -> pd.DataFrame:
+def hourly_from_daily_file(filepath: Path) -> pd.DataFrame:
     """
-    For one OMIE raw file (96 periods of 15-min),
-    aggregate to 24 hourly prices (average of each block of 4).
+    Take one daily OMIE file and return a HOURLY DataFrame with columns:
 
-    Returns DataFrame with canonical columns:
-      year, month, day, period, price_main, price_alt, timestamp, zone
+      Year, Month, Day, Hour, Price1, Price2, Datetime, Country
+
+    Logic:
+
+      - If Period goes up to 96 → treat as 96 x 15-min, average blocks of 4.
+      - If Period <= 24 → treat as already-hourly (just rename Period->Hour).
     """
 
-    m = re.search(r"marginalpdbc_(\d{8})\.(\d+)$", path.name)
+    df = parse_daily_file(filepath)
+
+    # Extract date from filename
+    m = re.search(r"marginalpdbc_(\d{8})\.(\d+)$", filepath.name)
     if not m:
-        raise ValueError(f"Cannot parse date from filename: {path}")
+        raise ValueError(f"Cannot parse date from filename: {filepath.name}")
 
-    date_str = m.group(1)
-    date = pd.to_datetime(date_str, format="%Y%m%d")
+    date_str, version_str = m.groups()
+    file_date = datetime.strptime(date_str, "%Y%m%d").date()
 
-    df = parse_omie_raw_file(path)
+    # Decide country from suffix (same logic you used)
+    country = "Spain" if filepath.suffix == ".1" else "Portugal"
 
-    # Sanity check: single date in file
-    unique_dates = df[["year", "month", "day"]].drop_duplicates()
-    if len(unique_dates) != 1:
-        raise ValueError(f"File {path} contains multiple dates: {unique_dates}")
+    max_period = df["Period"].max()
 
-    # Hour index 0..23 from period 1..96
-    df["hour_of_day"] = (df["period"] - 1) // 4
+    if max_period > 24:
+        # 96 x 15-min → group by hour_of_day = (period-1)//4
+        df["hour_of_day"] = (df["Period"] - 1) // 4
 
-    # Average each block of 4 quarters per hour
-    agg = (
-        df.groupby("hour_of_day", as_index=False)
-        .agg(
-            price_main=("price_main", "mean"),
-            price_alt=("price_alt", "mean"),
+        agg = (
+            df.groupby("hour_of_day", as_index=False)
+            .agg(
+                Price1=("Price1", "mean"),
+                Price2=("Price2", "mean"),
+            )
+            .sort_values("hour_of_day")
         )
-        .sort_values("hour_of_day")
+
+        # Round to 2 decimals like OMIE style
+        agg["Price1"] = agg["Price1"].round(2)
+        agg["Price2"] = agg["Price2"].round(2)
+
+        agg["Hour"] = agg["hour_of_day"] + 1
+
+    else:
+        # Already hourly (24 rows)
+        agg = df.copy()
+        agg = agg.sort_values("Period").rename(columns={"Period": "Hour"})
+        agg = agg[["Hour", "Price1", "Price2"]]
+
+    # Attach date and Datetime
+    agg["Year"] = file_date.year
+    agg["Month"] = file_date.month
+    agg["Day"] = file_date.day
+
+    # Datetime = delivery date + (Hour-1) hours
+    agg["Datetime"] = pd.to_datetime(
+        {
+            "year": agg["Year"],
+            "month": agg["Month"],
+            "day": agg["Day"],
+        }
+    ) + pd.to_timedelta(agg["Hour"] - 1, unit="h")
+
+    agg["Country"] = country
+
+    # Final column order matching your DB
+    agg = agg[
+        ["Year", "Month", "Day", "Hour", "Price1", "Price2", "Datetime", "Country"]
+    ]
+
+    return agg
+
+
+def build_hourly_from_raw_files() -> pd.DataFrame:
+    """
+    Build hourly data for ALL dates >= CHANGE_DATE
+    from raw OMIE files in data/marginalpdbc_YYYYMMDD.{1,2}
+    """
+
+    if not DATA_DIR.exists():
+        raise FileNotFoundError(f"Data directory not found: {DATA_DIR}")
+
+    paths = sorted(DATA_DIR.glob("marginalpdbc_*.1")) + sorted(
+        DATA_DIR.glob("marginalpdbc_*.2")
     )
 
-    # Round to 2 decimals like OMIE
-    agg["price_main"] = agg["price_main"].round(2)
-    agg["price_alt"] = agg["price_alt"].round(2)
+    all_dfs = []
 
-    # Add date info
-    agg["year"] = date.year
-    agg["month"] = date.month
-    agg["day"] = date.day
-
-    # period 1..24
-    agg["period"] = agg["hour_of_day"] + 1
-
-    # Timestamp = date + hour
-    agg["timestamp"] = date + pd.to_timedelta(agg["hour_of_day"], unit="h")
-
-    # For now single zone
-    agg["zone"] = "Spain"
-
-    cols = [
-        "year",
-        "month",
-        "day",
-        "period",
-        "price_main",
-        "price_alt",
-        "timestamp",
-        "zone",
-    ]
-    return agg[cols]
-
-
-def get_best_raw_files():
-    """
-    Scan data/ for marginalpdbc_YYYYMMDD.X files with X in {1,2,...},
-    and for each date keep the file with the highest X.
-
-    Returns a list of Paths sorted by date.
-    """
-
-    best_by_date = {}
-
-    for path in DATA_DIR.glob("marginalpdbc_*.*"):
+    for path in paths:
         m = re.search(r"marginalpdbc_(\d{8})\.(\d+)$", path.name)
         if not m:
             continue
 
         date_str = m.group(1)
-        version = int(m.group(2))
+        file_date = datetime.strptime(date_str, "%Y%m%d").date()
 
-        # Keep highest version for that date
-        if date_str not in best_by_date or version > best_by_date[date_str][0]:
-            best_by_date[date_str] = (version, path)
-
-    # Sort by date string
-    sorted_dates = sorted(best_by_date.keys())
-    return [best_by_date[d][1] for d in sorted_dates]
-
-
-def build_hourly_from_raw_files() -> pd.DataFrame:
-    """
-    Loop over all marginalpdbc_YYYYMMDD.X files in data/,
-    pick the best version per date (max X), keep only dates >= CHANGE_DATE,
-    and build one big hourly DataFrame.
-    """
-
-    all_dfs = []
-
-    for path in get_best_raw_files():
-        # Check date
-        m = re.search(r"marginalpdbc_(\d{8})\.(\d+)$", path.name)
-        date_str = m.group(1)
-        date = pd.to_datetime(date_str, format="%Y%m%d")
-
-        if date < CHANGE_DATE:
+        # Only rebuild region with 15-min / possibly-broken data
+        if file_date < CHANGE_DATE:
             continue
 
-        df_day = hourly_from_raw_file(path)
+        print(f"🧮 Rebuilding hourly for {path.name}")
+        df_day = hourly_from_daily_file(path)
         all_dfs.append(df_day)
 
     if not all_dfs:
         raise RuntimeError(
-            f"No OMIE raw files >= {CHANGE_DATE.date()} found in data/"
+            f"No OMIE raw files found for dates >= {CHANGE_DATE} in {DATA_DIR}"
         )
 
-    df_hourly = pd.concat(all_dfs, ignore_index=True)
+    hourly = pd.concat(all_dfs, ignore_index=True)
+    hourly = hourly.sort_values(["Datetime", "Country"]).reset_index(drop=True)
 
-    df_hourly = df_hourly.sort_values(
-        ["year", "month", "day", "period"]
-    ).reset_index(drop=True)
-
-    return df_hourly
+    return hourly
 
 
-# ---------- main logic ----------
+# ---------- main ----------
 
 def main():
-    # 1) Load existing mixed hourly file
-    df_all, has_header, orig_cols = load_all_prices()
+    # 1) Load existing hourly DB (current mixed file)
+    if not CSV_PATH.exists():
+        raise FileNotFoundError(f"{CSV_PATH} not found")
 
-    df_all["year"] = df_all["year"].astype(int)
-    df_all["month"] = df_all["month"].astype(int)
-    df_all["day"] = df_all["day"].astype(int)
-    df_all["period"] = df_all["period"].astype(int)
+    df_all = pd.read_csv(CSV_PATH)
+    if "Datetime" not in df_all.columns:
+        raise ValueError("Expected column 'Datetime' in all_omie_prices.csv")
 
-    df_all["delivery_date"] = pd.to_datetime(df_all[["year", "month", "day"]])
+    df_all["Datetime"] = pd.to_datetime(df_all["Datetime"])
+    df_all["delivery_date"] = df_all["Datetime"].dt.date
 
-    # 2) Keep only data BEFORE October 1, 2025
-    df_before = df_all.loc[df_all["delivery_date"] < CHANGE_DATE].copy()
+    # 2) Keep only data BEFORE the change date
+    df_before = df_all[df_all["delivery_date"] < CHANGE_DATE].copy()
+    df_before = df_before.drop(columns=["delivery_date"])
 
-    # Rebuild hourly timestamps for consistency
-    df_before["timestamp"] = (
-        df_before["delivery_date"]
-        + pd.to_timedelta(df_before["period"] - 1, unit="h")
+    print(
+        f"✅ Keeping {len(df_before)} rows before {CHANGE_DATE} "
+        f"from existing hourly DB"
     )
 
-    base_cols = [
-        "year",
-        "month",
-        "day",
-        "period",
-        "price_main",
-        "price_alt",
-        "timestamp",
-        "zone",
-    ]
-    df_before = df_before[base_cols]
-
-    # 3) Build new hourly data from best raw OMIE daily files (>= 2025-10-01)
+    # 3) Rebuild hourly data from raw files for CHANGE_DATE and after
     df_after = build_hourly_from_raw_files()
+    print(f"✅ Rebuilt {len(df_after)} rows from raw OMIE daily files")
 
-    # 4) Combine old hourly + new hourly
-    df_final = pd.concat(
-        [df_before, df_after],
-        ignore_index=True,
-    )
+    # 4) Combine and sort
+    df_final = pd.concat([df_before, df_after], ignore_index=True)
+    df_final = df_final.sort_values(["Datetime", "Country"]).reset_index(drop=True)
 
-    df_final = df_final.sort_values(
-        ["year", "month", "day", "period"]
-    ).reset_index(drop=True)
+    # 5) Save CSV
+    df_final.to_csv(CSV_PATH, index=False)
+    print(f"💾 Overwrote {CSV_PATH}")
 
-    # 5) Restore original column names / structure
+    # 6) Save Parquet
+    df_final.to_parquet(PARQUET_PATH, index=False)
+    print(f"💾 Overwrote {PARQUET_PATH}")
 
-    if len(orig_cols) == 8:
-        rename_back = {
-            "year": orig_cols[0],
-            "month": orig_cols[1],
-            "day": orig_cols[2],
-            "period": orig_cols[3],
-            "price_main": orig_cols[4],
-            "price_alt": orig_cols[5],
-            "timestamp": orig_cols[6],
-            "zone": orig_cols[7],
-        }
-        df_final = df_final.rename(columns=rename_back)
-        df_final = df_final[orig_cols]
-
-    # 6) Overwrite CSV / Parquet / DuckDB
-
-    # CSV – keep header / no-header exactly as before
-    df_final.to_csv(ALL_CSV, index=False, header=has_header)
-    print(f"Overwritten CSV with clean hourly data: {ALL_CSV}")
-
-    df_final.to_parquet(ALL_PARQUET, index=False)
-    print(f"Overwritten Parquet: {ALL_PARQUET}")
-
-    con = duckdb.connect(str(ALL_DUCKDB))
-    con.register("prices_hourly_df", df_final)
-    con.execute(
-        "CREATE OR REPLACE TABLE omie_prices AS "
-        "SELECT * FROM prices_hourly_df"
-    )
+    # 7) Save DuckDB (table name 'prices' as in your scripts)
+    con = duckdb.connect(DUCKDB_PATH)
+    con.execute("DROP TABLE IF EXISTS prices")
+    con.register("df", df_final)
+    con.execute("CREATE TABLE prices AS SELECT * FROM df")
     con.close()
-    print(f"Overwritten DuckDB (table omie_prices): {ALL_DUCKDB}")
+    print(f"💾 Overwrote {DUCKDB_PATH} (table 'prices')")
+
+    print("🎉 Hourly OMIE database successfully rebuilt for October 2025 onwards!")
 
 
 if __name__ == "__main__":
