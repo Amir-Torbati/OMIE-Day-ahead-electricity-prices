@@ -25,40 +25,53 @@ OUT_HOURLY_DUCKDB = PROCESSED / "omie_prices_hourly_until_2025-09-30.duckdb"
 CHANGE_DATE = pd.Timestamp("2025-10-01")
 
 
-def load_all_prices():
+def load_all_prices() -> pd.DataFrame:
     """
-    Load all_omie_prices.csv.
-    Tries with header; if no 'year' column, falls back to no-header mode.
-    """
-    df = pd.read_csv(INPUT_CSV)
+    Load all_omie_prices.csv, detecting automatically whether
+    there is a header row or not.
 
-    if "year" not in df.columns:
-        df = pd.read_csv(
-            INPUT_CSV,
-            header=None,
-            names=[
-                "year",
-                "month",
-                "day",
-                "period",
-                "price_main",
-                "price_alt",
-                "timestamp",
-                "zone",
-            ],
-        )
+    We then standardise the first 8 columns to:
+    year, month, day, period, price_main, price_alt, timestamp, zone
+    regardless of the original column names.
+    """
+
+    # Peek a few rows with NO header to inspect first value
+    preview = pd.read_csv(INPUT_CSV, nrows=5, header=None)
+    first_val = str(preview.iloc[0, 0])
+
+    # Try to interpret the first value as a number (year)
+    has_header = False
+    try:
+        float(first_val)  # if this works, it's likely data, not header
+        has_header = False
+    except ValueError:
+        has_header = True
+
+    if has_header:
+        # Read with header row, then rename columns by position
+        df = pd.read_csv(INPUT_CSV, header=0)
     else:
-        # Make sure columns have the expected names
-        df = df.rename(
-            columns={
-                "Year": "year",
-                "Month": "month",
-                "Day": "day",
-                "Period": "period",
-                "Price": "price_main",
-                # if you already have better names, adjust here
-            }
+        # No header: read everything as data
+        df = pd.read_csv(INPUT_CSV, header=None)
+
+    # Ensure we have at least 8 columns
+    if df.shape[1] < 8:
+        raise ValueError(
+            f"Expected at least 8 columns in {INPUT_CSV}, found {df.shape[1]}"
         )
+
+    # Standardise column names by POSITION, not by their current names
+    col_map = {
+        df.columns[0]: "year",
+        df.columns[1]: "month",
+        df.columns[2]: "day",
+        df.columns[3]: "period",
+        df.columns[4]: "price_main",
+        df.columns[5]: "price_alt",
+        df.columns[6]: "timestamp",
+        df.columns[7]: "zone",
+    }
+    df = df.rename(columns=col_map)
 
     return df
 
@@ -87,7 +100,7 @@ def main():
         + pd.to_timedelta((df_15["period"] - 1) * 15, unit="m")
     )
 
-    # (Optional but nice) recompute timestamps for hourly data too
+    # (Optional but good) recompute timestamps for hourly data too
     df_hourly["timestamp"] = (
         df_hourly["delivery_date"]
         + pd.to_timedelta(df_hourly["period"] - 1, unit="h")
@@ -141,3 +154,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
