@@ -11,7 +11,7 @@ DATA_DIR = "data"
 OUTPUT_DIR = "processed"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# Hourly master DB (same as before)
+# Hourly master DB
 HOURLY_CSV = os.path.join(OUTPUT_DIR, "all_omie_prices.csv")
 HOURLY_PARQUET = os.path.join(OUTPUT_DIR, "all_omie_prices.parquet")
 HOURLY_DUCKDB = os.path.join(OUTPUT_DIR, "omie_prices.duckdb")
@@ -72,7 +72,7 @@ def extract_date_and_country(filepath: str):
 def build_hourly_df(df_quarters: pd.DataFrame, file_date, country: str) -> pd.DataFrame:
     """
     From one daily file (24 or 96 periods) build HOURLY data
-    matching the structure of all_omie_prices.*
+    matching the structure of all_omie_prices.* + delivery_date.
     """
     max_period = df_quarters["Period"].max()
 
@@ -103,7 +103,22 @@ def build_hourly_df(df_quarters: pd.DataFrame, file_date, country: str) -> pd.Da
 
     agg["Country"] = country
 
-    return agg[["Year", "Month", "Day", "Hour", "Price1", "Price2", "Datetime", "Country"]]
+    # 🔹 the missing element: delivery date column
+    agg["delivery_date"] = agg["Datetime"].dt.date
+
+    return agg[
+        [
+            "Year",
+            "Month",
+            "Day",
+            "Hour",
+            "Price1",
+            "Price2",
+            "Datetime",
+            "Country",
+            "delivery_date",
+        ]
+    ]
 
 
 def build_15min_df(df_quarters: pd.DataFrame, file_date, country: str) -> pd.DataFrame:
@@ -116,31 +131,67 @@ def build_15min_df(df_quarters: pd.DataFrame, file_date, country: str) -> pd.Dat
         {"year": df["Year"], "month": df["Month"], "day": df["Day"]}
     ) + pd.to_timedelta((df["Period"] - 1) * 15, unit="m")
     df["Country"] = country
-    return df[["Year", "Month", "Day", "Period", "Price1", "Price2", "Datetime", "Country"]]
+    df["delivery_date"] = df["Datetime"].dt.date
+
+    return df[
+        [
+            "Year",
+            "Month",
+            "Day",
+            "Period",
+            "Price1",
+            "Price2",
+            "Datetime",
+            "Country",
+            "delivery_date",
+        ]
+    ]
 
 
 def main():
     # -------- load existing HOURLY DB --------
     if os.path.exists(HOURLY_PARQUET):
         hourly_existing = pd.read_parquet(HOURLY_PARQUET)
+        # ensure delivery_date exists / is consistent
         hourly_existing["delivery_date"] = hourly_existing["Datetime"].dt.date
         hourly_pairs = set(
             zip(hourly_existing["delivery_date"], hourly_existing["Country"])
         )
     else:
         hourly_existing = pd.DataFrame(
-            columns=["Year", "Month", "Day", "Hour", "Price1", "Price2", "Datetime", "Country"]
+            columns=[
+                "Year",
+                "Month",
+                "Day",
+                "Hour",
+                "Price1",
+                "Price2",
+                "Datetime",
+                "Country",
+                "delivery_date",
+            ]
         )
         hourly_pairs = set()
 
     # -------- load existing 15-min DB --------
     if os.path.exists(FIFTEEN_PARQUET):
         q_existing = pd.read_parquet(FIFTEEN_PARQUET)
+        # ensure delivery_date exists / is consistent
         q_existing["delivery_date"] = q_existing["Datetime"].dt.date
         q_pairs = set(zip(q_existing["delivery_date"], q_existing["Country"]))
     else:
         q_existing = pd.DataFrame(
-            columns=["Year", "Month", "Day", "Period", "Price1", "Price2", "Datetime", "Country"]
+            columns=[
+                "Year",
+                "Month",
+                "Day",
+                "Period",
+                "Price1",
+                "Price2",
+                "Datetime",
+                "Country",
+                "delivery_date",
+            ]
         )
         q_pairs = set()
 
