@@ -5,38 +5,38 @@
     "PT"
   ],
   "counts": {
-    "omie_15min": 70272,
-    "omie_hourly": 61440,
-    "omie_native": 114144
+    "omie_15min": 70464,
+    "omie_hourly": 61488,
+    "omie_native": 114336
   },
-  "delivery_days": 1280,
+  "delivery_days": 1281,
   "files": {
     "omie_15min.parquet": {
-      "bytes": 660260,
-      "sha256": "a76fde84df0ec8c3a74b9a9131d5a1ee16b7fffe6df4d2bd60d5fd2a7dd4f647"
+      "bytes": 662232,
+      "sha256": "dfe17e59ee7b879f97a0e6b55f3f6bd273226a7f406cb4b4a309af95b21c1810"
     },
     "omie_hourly.parquet": {
-      "bytes": 594290,
-      "sha256": "6e91fd3a748ce09dff6e4642eb96d0c247613f23ea706fdc53ee99e5e60799aa"
+      "bytes": 594796,
+      "sha256": "1de56904a589fdd5c352766ea2885139ce904ba66b981f83dd26139e2fc233da"
     },
     "omie_native.parquet": {
-      "bytes": 1035397,
-      "sha256": "2c5030152831f38b1b6cf4515962e450a504972edc1cd09bb2aa0c56ff2493e0"
+      "bytes": 1036977,
+      "sha256": "be2a636f8743ae64e5dfdd685fc7e9d75c4c8fcd81e77662713f5dbb5aabe078"
     },
     "omie_prices.duckdb": {
       "bytes": 5255168,
-      "sha256": "e09e676ece59403b41cd4f3f1d760f0a09008e04f975d51a00d9305a43cc02f4"
+      "sha256": "3a05dde60551ecd1472c68e56bdb767171440b96398a540a434492482e3f04d3"
     }
   },
   "first_day": "2023-04-01",
-  "last_day": "2026-10-01",
+  "last_day": "2026-10-02",
   "qa": {
     "duplicate_keys": 0,
     "missing_days": [],
     "null_prices": 0
   },
   "revision_policy": "Highest version present; scheduled refresh probes .1 and .2 for latest 3 delivery dates",
-  "source_fingerprint": "43791b6bc9772e7d3964c203bb89304f7e24ae735e9bbce332425936978a909b",
+  "source_fingerprint": "6c9435889ea046e71f0df5e35ee7a08cd90092434ea72a4f644ec87ecd2b6008",
   "sources": [
     {
       "file": "marginalpdbc_20230401.1",
@@ -5157,6 +5157,10 @@
     {
       "file": "marginalpdbc_20261001.1",
       "sha256": "2427a3b045adec90f551ae8b1eda0557f3916e470c7ddf6df9ebaa4b37260034"
+    },
+    {
+      "file": "marginalpdbc_20261002.1",
+      "sha256": "1340e7efe07a4affaf96b6cdde22036b317e078f36abc86e300b9532079bb693"
     }
   ],
   "status": "complete",
