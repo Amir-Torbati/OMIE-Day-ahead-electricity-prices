@@ -1,0 +1,8 @@
+# Preserve exact official source bytes and portable binary outputs.
+data/marginalpdbc_* -text
+*.parquet -text
+*.duckdb -text
+*.py text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.md text eol=lf
