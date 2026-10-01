@@ -149,7 +149,12 @@ def collect(root, end, refresh_days=3, max_version=2, downloader=fetch):
         if day not in grouped and available:
             repaired.append(str(day))
     # build() checks completeness, so an unavailable required new date fails the run.
-    report = build(root, end)
+    try:
+        report = build(root, end)
+    except ValueError:
+        print(json.dumps({'required_end':str(end),'changed_files':changed,
+                          'version_attempt_errors':errors},indent=2), flush=True)
+        raise
     return {'changed_files': changed, 'new_or_repaired_dates': repaired,
             'version_attempt_errors': errors, 'published': report}
 

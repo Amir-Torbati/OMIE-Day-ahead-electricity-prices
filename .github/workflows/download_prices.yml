@@ -1,6 +1,11 @@
 name: Collect and validate OMIE prices
 on:
   workflow_dispatch:
+    inputs:
+      end:
+        description: 'Optional required delivery end date (YYYY-MM-DD); blank means tomorrow in Madrid'
+        required: false
+        type: string
   schedule:
     - cron: '17 13,17,21 * * *'
 permissions:
@@ -23,7 +28,15 @@ jobs:
       - run: pip install -r requirements.txt
       - run: python -m pytest -q
       - name: Download, validate and publish through tomorrow in Madrid
-        run: python omie_pipeline.py collect
+        env:
+          COLLECTION_END: ${{ inputs.end }}
+        shell: bash
+        run: |
+          if [[ -n "$COLLECTION_END" ]]; then
+            python omie_pipeline.py collect --end "$COLLECTION_END"
+          else
+            python omie_pipeline.py collect
+          fi
       - name: Commit validated archive and outputs
         shell: bash
         run: |
