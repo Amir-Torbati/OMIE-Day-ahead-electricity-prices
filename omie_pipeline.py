@@ -7,6 +7,7 @@ import hashlib
 import io
 import json
 import math
+import os
 from pathlib import Path
 import re
 import zipfile
@@ -102,9 +103,14 @@ def raw_files(root):
     return grouped
 
 
+class FileNotPublished(OSError):
+    """Official endpoint explicitly returned HTTP 404 for a requested revision."""
+
+
 def fetch(filename):
     """Bounded retries and timeout; reject invalid bodies before storing any file."""
     from urllib.request import urlopen, Request
+    from urllib.error import HTTPError
     from urllib.parse import urlencode
     import time as clock
     url = 'https://www.omie.es/es/file-download?' + urlencode({'parents': 'marginalpdbc', 'filename': filename})
@@ -116,13 +122,20 @@ def fetch(filename):
                 raise ValueError('Unexpectedly large source response')
             parse(raw, filename, datetime.now(UTC), 'validation', '')
             return raw
+        except HTTPError as exc:
+            if exc.code == 404:
+                exc.close()
+                raise FileNotPublished(filename) from None
+            if attempt == 2:
+                raise
+            clock.sleep(attempt + 1)
         except (OSError, ValueError):
             if attempt == 2:
                 raise
             clock.sleep(attempt + 1)
 
 
-def collect(root, end, refresh_days=3, max_version=2, downloader=fetch):
+def collect(root, end, refresh_days=3, max_version=2, downloader=fetch, allow_pending_end=False):
     root = Path(root)
     grouped = raw_files(root)
     first = min(grouped)
@@ -132,8 +145,10 @@ def collect(root, end, refresh_days=3, max_version=2, downloader=fetch):
                if first + timedelta(days=i) not in grouped or
                first + timedelta(days=i) >= end - timedelta(days=refresh_days-1)]
     changed, errors, repaired = 0, [], []
+    unpublished = set()
     for day in targets:
         available = False
+        not_published = 0
         for version in range(1, max_version+1):
             name = f'marginalpdbc_{day:%Y%m%d}.{version}'
             try:
@@ -146,16 +161,21 @@ def collect(root, end, refresh_days=3, max_version=2, downloader=fetch):
                 available = True
             except (OSError, ValueError) as exc:
                 errors.append({'file': name, 'error': type(exc).__name__})
+                if isinstance(exc, FileNotPublished):not_published += 1
+        if not_published == max_version:unpublished.add(day)
         if day not in grouped and available:
             repaired.append(str(day))
     # build() checks completeness, so an unavailable required new date fails the run.
     try:
-        report = build(root, end)
+        pending = allow_pending_end and end in unpublished and end not in raw_files(root)
+        report = build(root, end-timedelta(days=1) if pending else end)
     except ValueError:
         print(json.dumps({'required_end':str(end),'changed_files':changed,
                           'version_attempt_errors':errors},indent=2), flush=True)
         raise
-    return {'changed_files': changed, 'new_or_repaired_dates': repaired,
+    return {'status':'publication_pending' if pending else 'complete',
+            'pending_delivery_date':str(end) if pending else None,
+            'changed_files': changed, 'new_or_repaired_dates': repaired,
             'version_attempt_errors': errors, 'published': report}
 
 
@@ -249,9 +269,15 @@ def main():
     if a.refresh_days < 1:
         p.error('--refresh-days must be positive')
     if a.command == 'collect':
-        target = a.end or delivery_target(datetime.now(UTC))
-        result = collect(a.root, target, a.refresh_days, a.max_version)
+        now = datetime.now(UTC)
+        target = a.end or delivery_target(now)
+        local = now.astimezone(MADRID)
+        allow_pending = (not a.end and target > local.date() and (local.hour,local.minute) < (21,17))
+        result = collect(a.root, target, a.refresh_days, a.max_version, allow_pending_end=allow_pending)
         result['required_delivery_end'] = str(target)
+        if os.environ.get('GITHUB_STEP_SUMMARY'):
+            with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
+                f.write(f"OMIE: **{result['status']}**. Requested through {target}; validated through {result['published']['last_day']}. Changed source files: {result['changed_files']}.\n")
     else:
         result = build(a.root, a.end)
     # The full source hash inventory is in processed/manifest.json.

@@ -4,7 +4,7 @@ import json
 import duckdb
 import pytest
 from omie_pipeline import expected, parse, build, collect
-from omie_pipeline import delivery_target
+from omie_pipeline import delivery_target, FileNotPublished
 
 NOW = datetime(2026,10,1,tzinfo=timezone.utc)
 
@@ -76,3 +76,21 @@ def test_corrupt_export_rebuilt(tmp_path):
     p=tmp_path/'processed/omie_native.parquet';p.write_bytes(b'corrupt')
     m=build(tmp_path)
     assert hashlib.sha256(p.read_bytes()).hexdigest()==m['files'][p.name]['sha256']
+
+
+def test_unpublished_tomorrow_pending_but_historical_gap_still_fails(tmp_path):
+    seed(tmp_path,date(2026,10,1));seed(tmp_path,date(2026,10,2))
+    def unavailable(name):raise FileNotPublished(name)
+    r=collect(tmp_path,date(2026,10,3),downloader=unavailable,allow_pending_end=True)
+    assert r['status']=='publication_pending' and r['published']['last_day']=='2026-10-02'
+    assert r['pending_delivery_date']=='2026-10-03'
+    seed(tmp_path,date(2026,9,29)) # September 30 now becomes an internal gap.
+    with pytest.raises(ValueError,match='2026-09-30'):
+        collect(tmp_path,date(2026,10,3),downloader=unavailable,allow_pending_end=True)
+
+
+def test_network_failure_is_not_publication_pending(tmp_path):
+    seed(tmp_path,date(2026,10,2))
+    def offline(name):raise OSError('offline')
+    with pytest.raises(ValueError,match='2026-10-03'):
+        collect(tmp_path,date(2026,10,3),downloader=offline,allow_pending_end=True)
