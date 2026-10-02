@@ -135,10 +135,10 @@ def fetch(filename):
             clock.sleep(attempt + 1)
 
 
-def collect(root, end, refresh_days=3, max_version=2, downloader=fetch, allow_pending_end=False):
+def collect(root, end, refresh_days=3, max_version=2, downloader=fetch, allow_pending_end=False, start=None):
     root = Path(root)
     grouped = raw_files(root)
-    first = min(grouped)
+    first = min(min(grouped),start) if start is not None else min(grouped)
     if end < first:
         raise ValueError('End date precedes archive')
     targets = [first + timedelta(days=i) for i in range((end-first).days+1)
@@ -167,6 +167,8 @@ def collect(root, end, refresh_days=3, max_version=2, downloader=fetch, allow_pe
             repaired.append(str(day))
     # build() checks completeness, so an unavailable required new date fails the run.
     try:
+        if start is not None and min(raw_files(root))>start:
+            raise ValueError('Requested historical start is unavailable')
         pending = allow_pending_end and end in unpublished and end not in raw_files(root)
         report = build(root, end-timedelta(days=1) if pending else end)
     except ValueError:
@@ -263,6 +265,7 @@ def main():
     p.add_argument('command', choices=('collect','build'))
     p.add_argument('--root', default='.')
     p.add_argument('--end', type=date.fromisoformat)
+    p.add_argument('--start', type=date.fromisoformat,help='Extend the required historical start; never truncates existing data')
     p.add_argument('--refresh-days', type=int, default=3)
     p.add_argument('--max-version', type=int, choices=range(1,11), default=2)
     a = p.parse_args()
@@ -273,7 +276,7 @@ def main():
         target = a.end or delivery_target(now)
         local = now.astimezone(MADRID)
         allow_pending = (not a.end and target > local.date() and (local.hour,local.minute) < (21,23))
-        result = collect(a.root, target, a.refresh_days, a.max_version, allow_pending_end=allow_pending)
+        result = collect(a.root, target, a.refresh_days, a.max_version, allow_pending_end=allow_pending,start=a.start)
         result['required_delivery_end'] = str(target)
         if os.environ.get('GITHUB_STEP_SUMMARY'):
             with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:

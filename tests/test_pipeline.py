@@ -26,6 +26,12 @@ def seed(root, day, version=1, **prices):
     (root/'data').mkdir(exist_ok=True)
     (root/'data'/f'marginalpdbc_{day:%Y%m%d}.{version}').write_bytes(raw(day, **prices))
 
+def test_historical_start_cannot_be_silently_skipped(tmp_path):
+    seed(tmp_path,date(2023,1,2))
+    def absent(name):raise FileNotPublished(name)
+    with pytest.raises(ValueError,match='historical start'):
+        collect(tmp_path,date(2023,1,2),downloader=absent,start=date(2023,1,1))
+
 @pytest.mark.parametrize('day,n', [(date(2023,10,29),25),(date(2024,3,31),23),(date(2025,10,26),100),(date(2026,3,29),92)])
 def test_dst_and_countries(day,n):
     rows=parse(raw(day),f'marginalpdbc_{day:%Y%m%d}.2',NOW,'','').to_pylist()

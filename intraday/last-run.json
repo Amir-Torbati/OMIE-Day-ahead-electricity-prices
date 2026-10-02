@@ -1,0 +1,405 @@
+{
+  "attempts": [
+    {
+      "file": "marginalpibc_2026092501.1",
+      "horizons": {
+        "2026-09-25": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026092501.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026092502.1",
+      "horizons": {
+        "2026-09-25": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026092502.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026092503.1",
+      "horizons": {
+        "2026-09-25": {
+          "first_period": 49,
+          "last_period": 96,
+          "periods": 48
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 96,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026092503.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026092601.1",
+      "horizons": {
+        "2026-09-26": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026092601.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026092602.1",
+      "horizons": {
+        "2026-09-26": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026092602.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026092603.1",
+      "horizons": {
+        "2026-09-26": {
+          "first_period": 49,
+          "last_period": 96,
+          "periods": 48
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 96,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026092603.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026092701.1",
+      "horizons": {
+        "2026-09-27": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026092701.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026092702.1",
+      "horizons": {
+        "2026-09-27": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026092702.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026092703.1",
+      "horizons": {
+        "2026-09-27": {
+          "first_period": 49,
+          "last_period": 96,
+          "periods": 48
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 96,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026092703.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026092801.1",
+      "horizons": {
+        "2026-09-28": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026092801.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026092802.1",
+      "horizons": {
+        "2026-09-28": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026092802.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026092803.1",
+      "horizons": {
+        "2026-09-28": {
+          "first_period": 49,
+          "last_period": 96,
+          "periods": 48
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 96,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026092803.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026092901.1",
+      "horizons": {
+        "2026-09-29": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026092901.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026092902.1",
+      "horizons": {
+        "2026-09-29": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026092902.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026092903.1",
+      "horizons": {
+        "2026-09-29": {
+          "first_period": 49,
+          "last_period": 96,
+          "periods": 48
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 96,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026092903.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026093001.1",
+      "horizons": {
+        "2026-09-30": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026093001.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026093002.1",
+      "horizons": {
+        "2026-09-30": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026093002.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026093003.1",
+      "horizons": {
+        "2026-09-30": {
+          "first_period": 49,
+          "last_period": 96,
+          "periods": 48
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 96,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026093003.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026100101.1",
+      "horizons": {},
+      "internal_missing_periods": 0,
+      "rows": 0,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "empty_source_file"
+    },
+    {
+      "file": "marginalpibc_2026100101.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026100102.1",
+      "horizons": {
+        "2026-10-01": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026100102.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026100103.1",
+      "horizons": {
+        "2026-10-01": {
+          "first_period": 49,
+          "last_period": 96,
+          "periods": 48
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 96,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026100103.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026100201.1",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026100201.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026100202.1",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026100202.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026100203.1",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026100203.2",
+      "status": "not_published_404"
+    }
+  ],
+  "changed_source_files": 21,
+  "end": "2026-10-02",
+  "requests": 48,
+  "start": "2026-09-25",
+  "status": "completed_with_explicit_source_availability"
+}

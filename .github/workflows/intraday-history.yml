@@ -1,0 +1,38 @@
+name: Backfill intraday auction history
+on:
+  workflow_dispatch:
+    inputs:
+      years:
+        description: 'Years as a JSON list; existing complete monthly request checkpoints are skipped'
+        type: string
+        default: '[2023,2024,2025,2026]'
+permissions:
+  contents: write
+jobs:
+  history:
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        year: ${{ fromJSON(inputs.years) }}
+    concurrency:
+      group: intraday-history-${{ matrix.year }}
+      cancel-in-progress: false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - run: python intraday_history.py --year "$HISTORY_YEAR"
+        env:
+          HISTORY_YEAR: ${{ matrix.year }}
+          GH_TOKEN: ${{ github.token }}
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        if: always()
+        with:
+          name: intraday-summary-${{ matrix.year }}
+          path: history/summary.json
+          retention-days: 7

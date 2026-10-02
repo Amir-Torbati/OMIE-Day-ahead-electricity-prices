@@ -6,29 +6,29 @@
   ],
   "counts": {
     "omie_15min": 70464,
-    "omie_hourly": 61488,
-    "omie_native": 114336
+    "omie_hourly": 65806,
+    "omie_native": 118654
   },
-  "delivery_days": 1281,
+  "delivery_days": 1371,
   "files": {
     "omie_15min.parquet": {
       "bytes": 662232,
       "sha256": "dfe17e59ee7b879f97a0e6b55f3f6bd273226a7f406cb4b4a309af95b21c1810"
     },
     "omie_hourly.parquet": {
-      "bytes": 594796,
-      "sha256": "1de56904a589fdd5c352766ea2885139ce904ba66b981f83dd26139e2fc233da"
+      "bytes": 639031,
+      "sha256": "ea0ffb64155e5635b71e89a8e47495acb9811fc9e410343edfcb534468d16a6a"
     },
     "omie_native.parquet": {
-      "bytes": 1036977,
-      "sha256": "be2a636f8743ae64e5dfdd685fc7e9d75c4c8fcd81e77662713f5dbb5aabe078"
+      "bytes": 1064714,
+      "sha256": "24b25dbdb33d46438932907c726cda252b90085d86718fd85e7fa3ad6f2d03d0"
     },
     "omie_prices.duckdb": {
       "bytes": 5255168,
-      "sha256": "3a05dde60551ecd1472c68e56bdb767171440b96398a540a434492482e3f04d3"
+      "sha256": "a8e84009c389a0bac70b3fad05787d7f211e58236de6898608ab4b72f7a58652"
     }
   },
-  "first_day": "2023-04-01",
+  "first_day": "2023-01-01",
   "last_day": "2026-10-02",
   "qa": {
     "duplicate_keys": 0,
@@ -36,8 +36,368 @@
     "null_prices": 0
   },
   "revision_policy": "Highest version present; scheduled refresh probes .1 and .2 for latest 3 delivery dates",
-  "source_fingerprint": "6c9435889ea046e71f0df5e35ee7a08cd90092434ea72a4f644ec87ecd2b6008",
+  "source_fingerprint": "8e0b453e58c7f2901c062442f4c0d46a4f6b2cf1b443add81d99764bd3f2281b",
   "sources": [
+    {
+      "file": "marginalpdbc_20230101.1",
+      "sha256": "7bb09f17a3f61591f58ea7a77d2a6f165ddfb673821f7cf9e7ce0ba5dbd5d067"
+    },
+    {
+      "file": "marginalpdbc_20230102.1",
+      "sha256": "456dbaf02ea272ce516ef1c1addf12c4725d68089f80f26f7c4746051a79e2fe"
+    },
+    {
+      "file": "marginalpdbc_20230103.1",
+      "sha256": "d361c54c92e36b78e4dadce1bb5c5694e6d8050b2dd6189d232fe9e8dc7365c9"
+    },
+    {
+      "file": "marginalpdbc_20230104.1",
+      "sha256": "b17e83c5d25ff02ff9ca345394162a77648e4507c54ab8dcbf1027e78f6a526a"
+    },
+    {
+      "file": "marginalpdbc_20230105.1",
+      "sha256": "23191d2a5b4a448f26c64c7ecd71ed974fdea71f26a5812f9592f7c17b255553"
+    },
+    {
+      "file": "marginalpdbc_20230106.1",
+      "sha256": "2398d4b8708a069cdb9369dcecbd1e81fb5275ca3d6121707013f51b5cc300bf"
+    },
+    {
+      "file": "marginalpdbc_20230107.1",
+      "sha256": "8b21eba741987f383b3f25983401e938e6ed28eff9f7852846611f32ca0e14c3"
+    },
+    {
+      "file": "marginalpdbc_20230108.1",
+      "sha256": "3653f9306490f7d7f72d58642d1bbc60514905824ba995dbb954a0b03afe8636"
+    },
+    {
+      "file": "marginalpdbc_20230109.1",
+      "sha256": "b9fdc09f30e454ad80f0182cf04b165b285cef4ae10efab56138f5e8caffa5a7"
+    },
+    {
+      "file": "marginalpdbc_20230110.1",
+      "sha256": "118a383cd416c65a250c65c9394d1d8345f370a2a9c598462814922eb49451d0"
+    },
+    {
+      "file": "marginalpdbc_20230111.1",
+      "sha256": "19804336eb3b9d2a1457e63194abbf0144e3da760019879f4efbc0e712bdeb8c"
+    },
+    {
+      "file": "marginalpdbc_20230112.1",
+      "sha256": "ddf57337fecbbcf5a1fdeec9fbb1ae669adadea886a2260452fbfa14cc5c7232"
+    },
+    {
+      "file": "marginalpdbc_20230113.1",
+      "sha256": "c67933c843e501ced545e092f898e3c079cbb324d77e784711c0dae9e1462ac1"
+    },
+    {
+      "file": "marginalpdbc_20230114.1",
+      "sha256": "b68e124d8219f8ab124e5a0c293725c38fd25d9cc255edee89f0cdf32864bb3f"
+    },
+    {
+      "file": "marginalpdbc_20230115.1",
+      "sha256": "65795eff30073ad7f37739fb123856f36e02a2310489e42a446245b78a4ebfab"
+    },
+    {
+      "file": "marginalpdbc_20230116.1",
+      "sha256": "8811e86721df11661f60deb88ccc8af6198ce17be409689deb6fe61cce27bbd2"
+    },
+    {
+      "file": "marginalpdbc_20230117.1",
+      "sha256": "a9da623e60b561ffe0d2495e2ef13f586f98644125d73cd2ba51c137920d5366"
+    },
+    {
+      "file": "marginalpdbc_20230118.1",
+      "sha256": "46af98f978d75e84f38e5b993b80aaaea160b6f09f95b3089d8f676e1f437a5e"
+    },
+    {
+      "file": "marginalpdbc_20230119.1",
+      "sha256": "9b791ebc391e53f5e9e08e111722cbef45fe5920f0d1bf0b1e4b6b728504c801"
+    },
+    {
+      "file": "marginalpdbc_20230120.1",
+      "sha256": "641043cafa49250a67574a10b0dd53eb55ed2fd50bef2a38a2b92041c52ec396"
+    },
+    {
+      "file": "marginalpdbc_20230121.1",
+      "sha256": "a7859206c528b5c94290327beddd416f19c0af4ad52bd67e7b69e02ad1ac5a2a"
+    },
+    {
+      "file": "marginalpdbc_20230122.1",
+      "sha256": "55992762bc82bccb39ab9f8dd06d5666fd2c7e17749bd4429f7f4274c1e48e05"
+    },
+    {
+      "file": "marginalpdbc_20230123.1",
+      "sha256": "80d41f0f5a4f6466e0353f517b125f4b8a9e9ea17a40d1c6a15ab17a0a5c8092"
+    },
+    {
+      "file": "marginalpdbc_20230124.1",
+      "sha256": "8f7bb1429da5cfa73fb6e7e15f4c7d187450795a5182147638bdfce744baf281"
+    },
+    {
+      "file": "marginalpdbc_20230125.1",
+      "sha256": "e506bb4ec482cfdd3220f539796958e8d318cb8026fa4c9cf89867e433188423"
+    },
+    {
+      "file": "marginalpdbc_20230126.1",
+      "sha256": "37e4358af55645b248df8921ce9d1ed00c76336c4b258ff6fb90da22159987f6"
+    },
+    {
+      "file": "marginalpdbc_20230127.1",
+      "sha256": "680a919bd5c4d059b7da65746451ad7457102e5736c98e1f8c420491a9fa6fbd"
+    },
+    {
+      "file": "marginalpdbc_20230128.1",
+      "sha256": "30280319f1d6505eaf64c7c63901b961973254c5296679bbdbd347f4b86b8f74"
+    },
+    {
+      "file": "marginalpdbc_20230129.1",
+      "sha256": "6b68c9f3239f13b54470a5b23f33e9f02962f613f56c0c9a8392df5275f8ca8c"
+    },
+    {
+      "file": "marginalpdbc_20230130.1",
+      "sha256": "97ff7dac1f934e1bb9ac57b56da4bc28fea5661cf2bcbe5c3f91ed522e04e3c7"
+    },
+    {
+      "file": "marginalpdbc_20230131.1",
+      "sha256": "7e5727d0a7eb52170101941616c1a089fcf95f0a97f9c9ae82a2265cd07cb4a9"
+    },
+    {
+      "file": "marginalpdbc_20230201.1",
+      "sha256": "994608a4781a66fe6bc6d2d20e7e8fd49ca9de4db8863b06ed7dfe0a0e33417f"
+    },
+    {
+      "file": "marginalpdbc_20230202.1",
+      "sha256": "85b1a352640754951278233bdd24c783624ed7373b42c1ccce54a74d3b27c526"
+    },
+    {
+      "file": "marginalpdbc_20230203.1",
+      "sha256": "49308284a6bffaf87c9cd665e429219ac8d454e400b10734fcf5ac8104fb67f3"
+    },
+    {
+      "file": "marginalpdbc_20230204.1",
+      "sha256": "8b31c8ed3ec242a29f71787179e2323814dc02339ea84012b814932948188da5"
+    },
+    {
+      "file": "marginalpdbc_20230205.1",
+      "sha256": "adbab9fbbffe0d894a77564cb0a74b9a157fc7071965756fa542bc8dcfe3fe91"
+    },
+    {
+      "file": "marginalpdbc_20230206.1",
+      "sha256": "1e8a1564ac9bd2a287de4fe85f408aec8b9d799c6ee5a55c6618c4313ee47993"
+    },
+    {
+      "file": "marginalpdbc_20230207.1",
+      "sha256": "ccb9279d772d937fc71e2d0bde10c820a12e66ed83c785b665b2db5c1d429435"
+    },
+    {
+      "file": "marginalpdbc_20230208.1",
+      "sha256": "775f5bb6aef6b1bc4bd658ff1d7519390d850e761797f2225c0f02621a63e92a"
+    },
+    {
+      "file": "marginalpdbc_20230209.1",
+      "sha256": "d1abf388d11862a33a9d8288b07af56ce2ce9fbcdeec7d8d49b8f7ffb44cda69"
+    },
+    {
+      "file": "marginalpdbc_20230210.1",
+      "sha256": "6eeef1e680e74e4e0fbb307c4ed2fe976a912559496c5b14d3afa9ef033fb7d0"
+    },
+    {
+      "file": "marginalpdbc_20230211.1",
+      "sha256": "a54898c006cc90838327320e6a2a55363d4675fdf73a2a470322360d40209873"
+    },
+    {
+      "file": "marginalpdbc_20230212.1",
+      "sha256": "c339a21812f003a57b4a2b9fab0ff5e1ed5101db6bfa4179e38b4910d15c11f8"
+    },
+    {
+      "file": "marginalpdbc_20230213.1",
+      "sha256": "f4be778dc5198afba572058cce2c05a7c78905540f6f23666bf452ad4322228b"
+    },
+    {
+      "file": "marginalpdbc_20230214.1",
+      "sha256": "4f133534fdb7e0701d1d36bcdbadd580acd8b8c9756a5a403ed83d97f0f470b0"
+    },
+    {
+      "file": "marginalpdbc_20230215.1",
+      "sha256": "0c5a30e30f86864d6ba269c2da225b8e76a1a66657fa4e280632d0d4f482c6ff"
+    },
+    {
+      "file": "marginalpdbc_20230216.1",
+      "sha256": "417bdfa9352d7ef4420b75222b1c45ce74bd345255f922254bfa69e8f8758d1a"
+    },
+    {
+      "file": "marginalpdbc_20230217.1",
+      "sha256": "82d12b5e2ddcd76a667e4ec3806ac51528d79dd88e7ab37884772a0e4167ba9e"
+    },
+    {
+      "file": "marginalpdbc_20230218.1",
+      "sha256": "101340f047545e825305e5d8c03293274f56e8a5d0dd4b4af67696103b288d54"
+    },
+    {
+      "file": "marginalpdbc_20230219.1",
+      "sha256": "ab3caaa3009e442dfea96f672b82ddcf709239833b86b540e19dfffc02360d44"
+    },
+    {
+      "file": "marginalpdbc_20230220.1",
+      "sha256": "8497c4a359c4b904862c70bdba35f15f389b3788d3b99c45eb90b2a7d4aeeadd"
+    },
+    {
+      "file": "marginalpdbc_20230221.1",
+      "sha256": "bdfa0b106df04059ba5e817035fc9816dad28c3ec20c8434f1c051ff99df01d7"
+    },
+    {
+      "file": "marginalpdbc_20230222.1",
+      "sha256": "768e442649613bd050ca5a59aad79d598e10bc4b604bff5efa48c3303d1d77ff"
+    },
+    {
+      "file": "marginalpdbc_20230223.1",
+      "sha256": "e328901aa8920b6f5f2ff2170f0655a19cb984266375555dbc9947510fcbd263"
+    },
+    {
+      "file": "marginalpdbc_20230224.1",
+      "sha256": "1d2aadfe219d0ee81da4bcfe6b727725524fa1d15c76135c540267c7cfd5369b"
+    },
+    {
+      "file": "marginalpdbc_20230225.1",
+      "sha256": "9a9b31d6fe8e4e2c8700e914afaa521ce6096cf0d2c7e8c76b97173f38634167"
+    },
+    {
+      "file": "marginalpdbc_20230226.1",
+      "sha256": "1f2c87d8f2fb7269e77241995ab5065cf952fd7a0e04fcc9bcfadadf6621d853"
+    },
+    {
+      "file": "marginalpdbc_20230227.1",
+      "sha256": "8afb7e8064c461b87d87b62a1fcbd2afdc1a6f0153970c4aa61f1c28127a5c12"
+    },
+    {
+      "file": "marginalpdbc_20230228.1",
+      "sha256": "0edb00d3e6135837f4a32038d6113fcde06eb1c29fd18159a272aa73137126ec"
+    },
+    {
+      "file": "marginalpdbc_20230301.1",
+      "sha256": "18b0ff43699332bb6088510060800fa62379655e3a9ec2136b2073b661df8d32"
+    },
+    {
+      "file": "marginalpdbc_20230302.1",
+      "sha256": "2b65a00446850a4c2b2a2f72a99a7a086d256016bfeb6faa662e935051322b62"
+    },
+    {
+      "file": "marginalpdbc_20230303.1",
+      "sha256": "de8756623473365465f2ba8f7d206a9c0b930ba2372627240adeb88b1f123be1"
+    },
+    {
+      "file": "marginalpdbc_20230304.1",
+      "sha256": "45ed822ad15fd995061b7ce52f95d8a667c452bc478255666669386237350550"
+    },
+    {
+      "file": "marginalpdbc_20230305.1",
+      "sha256": "03e03e38d5e2d2755a9ddb5d5497edbc4a59a1e410d40f90749a7b47b93b0efb"
+    },
+    {
+      "file": "marginalpdbc_20230306.1",
+      "sha256": "b245535e19244080fb1eca2448e518df138b73df9638f48d983fc9e0420902fe"
+    },
+    {
+      "file": "marginalpdbc_20230307.1",
+      "sha256": "6dff25d3da53df5bad90e92ff6c65627a6d97b3291e020fc2bfb64e5a03bc98f"
+    },
+    {
+      "file": "marginalpdbc_20230308.1",
+      "sha256": "736a86408aa61e81d64e0566083d5e0c2eca3dd0fcb8ea0c792df9a4cdf608da"
+    },
+    {
+      "file": "marginalpdbc_20230309.1",
+      "sha256": "0c9fd94a1d5589072997a44202eb61f69b5caa674d281103dbbdee7a190a61a6"
+    },
+    {
+      "file": "marginalpdbc_20230310.1",
+      "sha256": "a74d0e34cee7f371e6131ecb21b586013ccaaebdd321da649dd4b050f76ecff0"
+    },
+    {
+      "file": "marginalpdbc_20230311.1",
+      "sha256": "99fa5692be74f4fc5ae2d301cf6155f02b8e198670f154dd9830dc03de3172db"
+    },
+    {
+      "file": "marginalpdbc_20230312.1",
+      "sha256": "aa650810b2aaf7daa8a7b622a7b0d7a2bbd924012a2451c1afcc5fe572d50f0e"
+    },
+    {
+      "file": "marginalpdbc_20230313.1",
+      "sha256": "aa7f8d2f661e4083b3c27aaffe66dfe642423b1126394c4fcd28dfdda42ecf00"
+    },
+    {
+      "file": "marginalpdbc_20230314.1",
+      "sha256": "681adcf0752d748dc70fdcf9eb3d782c3fff023efa45465da13d0c730ec256f5"
+    },
+    {
+      "file": "marginalpdbc_20230315.1",
+      "sha256": "e3a617a423a0264f18a160496945f0be8338e9cb06385c8f039da85a24b4c5db"
+    },
+    {
+      "file": "marginalpdbc_20230316.1",
+      "sha256": "8bf6006ba4a21688c0720f7973b321c4027d21a4ee954ee711d07e5dcc752ada"
+    },
+    {
+      "file": "marginalpdbc_20230317.1",
+      "sha256": "305252a6049b62098e4ea4e3cf8d1d2b40547d65e25d2018eb2f080ff0105e63"
+    },
+    {
+      "file": "marginalpdbc_20230318.1",
+      "sha256": "e8564388824925c71296045a052ea807c4a1f672c1b2bec5a565096c9c92c99a"
+    },
+    {
+      "file": "marginalpdbc_20230319.1",
+      "sha256": "d6f08d1a33a6e3710ac0fd3690c0ee5091088c11fe2d9120a1af18ad6fc13edf"
+    },
+    {
+      "file": "marginalpdbc_20230320.1",
+      "sha256": "1bb6c311707306069dbc9b509eaa972901941b9a944d3a03904b89f9dd0aaee3"
+    },
+    {
+      "file": "marginalpdbc_20230321.1",
+      "sha256": "16fdb7f7ae3482236c0e34fae13f074d27b98e80d6a89a8741eb001423bef144"
+    },
+    {
+      "file": "marginalpdbc_20230322.1",
+      "sha256": "798e6e96d3416864acdf608e5556837312d03868761fc88c245865abecce5f2e"
+    },
+    {
+      "file": "marginalpdbc_20230323.1",
+      "sha256": "9107f298f568de20a00e4504d7316b3fc51420460fce6cc71005bf84800b4da7"
+    },
+    {
+      "file": "marginalpdbc_20230324.1",
+      "sha256": "8145dd5b93078eff2dc904b90bbc265cd76420d52d1093baff207dab0f24efc3"
+    },
+    {
+      "file": "marginalpdbc_20230325.1",
+      "sha256": "d2b040a909c72033758d45250efbd3738534ca7115d6d5c37778b888e6dd788e"
+    },
+    {
+      "file": "marginalpdbc_20230326.1",
+      "sha256": "414ac931d8247ea19eb6f1c7b81894fba38e9d59e34ee8c11de46886d98a2415"
+    },
+    {
+      "file": "marginalpdbc_20230327.1",
+      "sha256": "99325336bb92d8190239b6b65bdc5a87da8315f8c0dfa3751150bd74bf25d125"
+    },
+    {
+      "file": "marginalpdbc_20230328.1",
+      "sha256": "18ff6937b14fcd62a329b1f84f35e0742cb76bd236bee85782cc33c8dd4260b4"
+    },
+    {
+      "file": "marginalpdbc_20230329.1",
+      "sha256": "42b884079956769d988d207f4ae18d607dac1d64e709634015ef1499fc27ee67"
+    },
+    {
+      "file": "marginalpdbc_20230330.1",
+      "sha256": "63c273830b4cf0f4d86d1e268189716455ffc72e4e9b72fa31892eb1ea4d5c23"
+    },
+    {
+      "file": "marginalpdbc_20230331.1",
+      "sha256": "d963ac63db270a8d859d32c9baa5bc9eb8b9f19c51a07ca2ef17b628bcc9373e"
+    },
     {
       "file": "marginalpdbc_20230401.1",
       "sha256": "2e676156738e3d3fa81b2574d69186431ebde020b02bc2a3a5978abca59b3fc8"
