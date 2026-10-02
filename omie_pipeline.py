@@ -251,11 +251,11 @@ def build(root, end=None):
 def delivery_target(now):
     """Before the afternoon collection window, require today, not unreleased tomorrow.
 
-    13:17 Madrid is our first check, not a guaranteed OMIE publication deadline.
+    13:23 Madrid is our first check, not a guaranteed OMIE publication deadline.
     Explicit --end remains available for backfills and strict operator requests.
     """
     local = now.astimezone(MADRID)
-    return local.date() + timedelta(days=int((local.hour, local.minute) >= (13, 17)))
+    return local.date() + timedelta(days=int((local.hour, local.minute) >= (13, 23)))
 
 
 def main():
@@ -272,7 +272,7 @@ def main():
         now = datetime.now(UTC)
         target = a.end or delivery_target(now)
         local = now.astimezone(MADRID)
-        allow_pending = (not a.end and target > local.date() and (local.hour,local.minute) < (21,17))
+        allow_pending = (not a.end and target > local.date() and (local.hour,local.minute) < (21,23))
         result = collect(a.root, target, a.refresh_days, a.max_version, allow_pending_end=allow_pending)
         result['required_delivery_end'] = str(target)
         if os.environ.get('GITHUB_STEP_SUMMARY'):

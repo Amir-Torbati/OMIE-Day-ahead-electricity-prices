@@ -3,11 +3,11 @@ on:
   workflow_dispatch:
     inputs:
       end:
-        description: 'Optional required delivery end date; default today before 13:17 Madrid, tomorrow afterwards'
+        description: 'Optional required delivery end date; default today before 13:23 Madrid, tomorrow afterwards'
         required: false
         type: string
   schedule:
-    - cron: '17 13,17,21 * * *'
+    - cron: '23 13,17,21 * * *'
       timezone: Europe/Madrid
 permissions:
   contents: write

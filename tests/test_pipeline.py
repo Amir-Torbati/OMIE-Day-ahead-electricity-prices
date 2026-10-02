@@ -11,10 +11,10 @@ NOW = datetime(2026,10,1,tzinfo=timezone.utc)
 
 @pytest.mark.parametrize('stamp,target', [
     ('2026-10-02T00:50:00+00:00', date(2026,10,2)),
-    ('2026-10-02T11:16:00+00:00', date(2026,10,2)),
-    ('2026-10-02T11:17:00+00:00', date(2026,10,3)),
-    ('2026-12-02T12:16:00+00:00', date(2026,12,2)),
-    ('2026-12-02T12:17:00+00:00', date(2026,12,3)),
+    ('2026-10-02T11:22:00+00:00', date(2026,10,2)),
+    ('2026-10-02T11:23:00+00:00', date(2026,10,3)),
+    ('2026-12-02T12:22:00+00:00', date(2026,12,2)),
+    ('2026-12-02T12:23:00+00:00', date(2026,12,3)),
 ])
 def test_publication_target_handles_midnight_and_dst(stamp,target):
     assert delivery_target(datetime.fromisoformat(stamp)) == target
