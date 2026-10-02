@@ -228,6 +228,16 @@ def build(root, end=None):
     return manifest
 
 
+def delivery_target(now):
+    """Before the afternoon collection window, require today, not unreleased tomorrow.
+
+    13:17 Madrid is our first check, not a guaranteed OMIE publication deadline.
+    Explicit --end remains available for backfills and strict operator requests.
+    """
+    local = now.astimezone(MADRID)
+    return local.date() + timedelta(days=int((local.hour, local.minute) >= (13, 17)))
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument('command', choices=('collect','build'))
@@ -239,7 +249,9 @@ def main():
     if a.refresh_days < 1:
         p.error('--refresh-days must be positive')
     if a.command == 'collect':
-        result = collect(a.root, a.end or datetime.now(MADRID).date()+timedelta(days=1), a.refresh_days, a.max_version)
+        target = a.end or delivery_target(datetime.now(UTC))
+        result = collect(a.root, target, a.refresh_days, a.max_version)
+        result['required_delivery_end'] = str(target)
     else:
         result = build(a.root, a.end)
     # The full source hash inventory is in processed/manifest.json.

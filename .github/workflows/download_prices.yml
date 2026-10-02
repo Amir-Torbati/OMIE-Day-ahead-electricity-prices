@@ -3,11 +3,12 @@ on:
   workflow_dispatch:
     inputs:
       end:
-        description: 'Optional required delivery end date (YYYY-MM-DD); blank means tomorrow in Madrid'
+        description: 'Optional required delivery end date; default today before 13:17 Madrid, tomorrow afterwards'
         required: false
         type: string
   schedule:
     - cron: '17 13,17,21 * * *'
+      timezone: Europe/Madrid
 permissions:
   contents: write
 concurrency:
@@ -27,7 +28,7 @@ jobs:
           cache-dependency-path: requirements.txt
       - run: pip install -r requirements.txt
       - run: python -m pytest -q
-      - name: Download, validate and publish through tomorrow in Madrid
+      - name: Check publication, retry recent dates and preserve validated revisions
         env:
           COLLECTION_END: ${{ inputs.end }}
         shell: bash
