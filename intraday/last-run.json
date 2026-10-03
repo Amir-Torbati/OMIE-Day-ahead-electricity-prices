@@ -1,54 +1,6 @@
 {
   "attempts": [
     {
-      "file": "marginalpibc_2026100101.1",
-      "horizons": {},
-      "internal_missing_periods": 0,
-      "rows": 0,
-      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
-      "status": "empty_source_file"
-    },
-    {
-      "file": "marginalpibc_2026100101.2",
-      "status": "not_published_404"
-    },
-    {
-      "file": "marginalpibc_2026100102.1",
-      "horizons": {
-        "2026-10-01": {
-          "first_period": 1,
-          "last_period": 96,
-          "periods": 96
-        }
-      },
-      "internal_missing_periods": 0,
-      "rows": 192,
-      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
-      "status": "validated_published_horizon"
-    },
-    {
-      "file": "marginalpibc_2026100102.2",
-      "status": "not_published_404"
-    },
-    {
-      "file": "marginalpibc_2026100103.1",
-      "horizons": {
-        "2026-10-01": {
-          "first_period": 49,
-          "last_period": 96,
-          "periods": 48
-        }
-      },
-      "internal_missing_periods": 0,
-      "rows": 96,
-      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
-      "status": "validated_published_horizon"
-    },
-    {
-      "file": "marginalpibc_2026100103.2",
-      "status": "not_published_404"
-    },
-    {
       "file": "marginalpibc_2026100201.1",
       "horizons": {
         "2026-10-02": {
@@ -149,11 +101,35 @@
     {
       "file": "marginalpibc_2026100403.2",
       "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026100501.1",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026100501.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026100502.1",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026100502.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026100503.1",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026100503.2",
+      "status": "not_published_404"
     }
   ],
   "changed_source_files": 0,
-  "end": "2026-10-04",
+  "end": "2026-10-05",
   "requests": 24,
-  "start": "2026-10-01",
+  "start": "2026-10-02",
   "status": "completed_with_explicit_source_availability"
 }
