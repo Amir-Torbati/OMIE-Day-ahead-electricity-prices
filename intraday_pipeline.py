@@ -108,10 +108,34 @@ def collect(root,start,end,downloader=fetch,max_version=2):
             atomic_write(index_path,json_data(index))
     report={'start':str(start),'end':str(end),'requests':len(attempts),'changed_source_files':changed,'attempts':attempts,
         'status':'request_failures' if any(a['status']=='failed' for a in attempts) else 'completed_with_explicit_source_availability'}
+    manifest=build(root,index)
+    report['health']=health(manifest,report)
     atomic_write(root/'last-run.json',json_data(report))
-    build(root,index)
     print(json.dumps({k:v for k,v in report.items() if k!='attempts'}))
     return report
+
+
+def health(manifest,report,now=None):
+    now=now or datetime.now(UTC)
+    cutoff=now.astimezone(MADRID).date()-timedelta(days=1)
+    actual=[datetime.strptime(FILE.fullmatch(s['file'])[1],'%Y%m%d').date()
+            for s in manifest['sessions'] if s['rows'] and not s['internal_missing_periods']]
+    latest=max(actual) if actual else None
+    invalid=[s['file'] for s in manifest['sessions'] if s['internal_missing_periods']]
+    empty=[s['file'] for s in manifest['sessions'] if not s['rows']]
+    missing=[]
+    first=date.fromisoformat(report['start']);last=min(date.fromisoformat(report['end']),cutoff)
+    known={(FILE.fullmatch(s['file'])[1],int(FILE.fullmatch(s['file'])[2])) for s in manifest['sessions']}
+    for offset in range(max(0,(last-first).days+1)):
+        day=first+timedelta(days=offset)
+        for session in range(1,7 if day<=date(2024,6,13) else 4):
+            if (f'{day:%Y%m%d}',session) not in known:missing.append(f'{day}:{session}')
+    return {'checked_at':now.isoformat(),'execution':'failed' if report['status']=='request_failures' else 'success',
+        'freshness':'current' if latest and latest>=cutoff else 'stale',
+        'required_auction_file_date':str(cutoff),'latest_auction_file_date':str(latest) if latest else None,
+        'completeness':'partial_or_unconfirmed' if missing or empty or invalid else 'published_horizons_validated',
+        'missing_closed_date_sessions':missing,'empty_source_files':empty,'internal_gap_files':invalid,
+        'policy':'Freshness requires an auction file dated yesterday or later. This is our operational allowance, not a verified publisher deadline; expected auction horizons/cancellations remain unconfirmed.'}
 
 
 def build(root,index=None):
@@ -144,4 +168,9 @@ if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--root',default='intraday');p.add_argument('--start',type=date.fromisoformat);p.add_argument('--end',type=date.fromisoformat)
     args=p.parse_args();today=datetime.now(MADRID).date();end=args.end or today+timedelta(days=1)
     report=collect(args.root,args.start or end-timedelta(days=3),end)
-    raise SystemExit(1 if report['status']=='request_failures' else 0)
+    h=report['health']
+    if os.environ.get('GITHUB_STEP_SUMMARY'):
+        with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
+            f.write(f"\n## Intraday health\nExecution: {h['execution']}; freshness: {h['freshness']}; coverage: {h['completeness']}.\n")
+            f.write(f"Latest auction file: {h['latest_auction_file_date']}; required: {h['required_auction_file_date']}. Missing closed-date sessions: {len(h['missing_closed_date_sessions'])}; source-empty files: {len(h['empty_source_files'])}.\n")
+    raise SystemExit(1 if h['execution']=='failed' or h['freshness']=='stale' or h['internal_gap_files'] else 0)

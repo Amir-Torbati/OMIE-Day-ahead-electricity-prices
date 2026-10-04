@@ -36,3 +36,13 @@ jobs:
           name: intraday-summary-${{ matrix.year }}
           path: history/summary.json
           retention-days: 7
+      - name: Preserve unpublished monthly archives after a failure
+        if: failure()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        with:
+          name: intraday-recovery-${{ matrix.year }}-${{ github.run_id }}
+          path: |
+            history/*.zip
+            history/*.sha256
+            history/summary.json
+          retention-days: 30
