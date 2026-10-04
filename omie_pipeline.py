@@ -260,6 +260,13 @@ def delivery_target(now):
     return local.date() + timedelta(days=int((local.hour, local.minute) >= (13, 23)))
 
 
+def publication_pending_allowed(now, target, explicit_end=False):
+    """Only tomorrow may be pending before our final 23:23 Madrid check."""
+    local = now.astimezone(MADRID)
+    return (not explicit_end and target == local.date() + timedelta(days=1)
+            and (local.hour, local.minute) < (23, 23))
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument('command', choices=('collect','build'))
@@ -274,8 +281,7 @@ def main():
     if a.command == 'collect':
         now = datetime.now(UTC)
         target = a.end or delivery_target(now)
-        local = now.astimezone(MADRID)
-        allow_pending = (not a.end and target > local.date() and (local.hour,local.minute) < (21,23))
+        allow_pending = publication_pending_allowed(now, target, explicit_end=a.end is not None)
         result = collect(a.root, target, a.refresh_days, a.max_version, allow_pending_end=allow_pending,start=a.start)
         result['required_delivery_end'] = str(target)
         if os.environ.get('GITHUB_STEP_SUMMARY'):

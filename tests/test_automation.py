@@ -3,6 +3,22 @@ from types import SimpleNamespace
 import pytest
 import github_release
 from intraday_pipeline import health
+from omie_pipeline import delivery_target, publication_pending_allowed
+
+
+@pytest.mark.parametrize('stamp,allowed', [
+    ('2026-10-04T19:23:00+00:00', True),
+    ('2026-10-04T21:22:59+00:00', True),
+    ('2026-10-04T21:23:00+00:00', False),
+    ('2026-12-04T22:22:59+00:00', True),
+    ('2026-12-04T22:23:00+00:00', False),
+    ('2026-10-04T22:05:00+00:00', False),
+])
+def test_final_publication_check_and_midnight(stamp, allowed):
+    now = datetime.fromisoformat(stamp)
+    target = delivery_target(now)
+    assert publication_pending_allowed(now, target) is allowed
+    assert not publication_pending_allowed(now, target, explicit_end=True)
 
 def test_freshness_is_not_inferred_from_successful_requests():
     report={'start':'2026-10-01','end':'2026-10-05','status':'completed_with_explicit_source_availability'}

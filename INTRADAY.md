@@ -31,7 +31,16 @@ row counts and published horizons. These files are committed in this repository.
 The manual **Backfill intraday auction history** workflow stores monthly ZIPs
 and SHA256 files in `intraday-YYYY-MM` releases. It checkpoints each month and
 uses two year jobs at most. No additional recurring workflow is created.
-Release data is durable while retained in the repository; summary artifacts
-expire after seven days. Archive backfill is a one-off use of runner time.
+Release data is durable while retained in the repository. Publication uses bounded
+retries and reconciles ambiguous release creation/upload responses. Each completed
+month saves its summary. On failure, recovery ZIPs, checksums and diagnostics are
+retained as artifacts for 30 days. Archive backfill is a one-off use of runner time.
+
+The collection report distinguishes request execution, freshness and completeness.
+A non-empty validated file dated yesterday or later satisfies the current operational
+freshness allowance; this is not a certified session publication deadline. Missing
+past sessions, empty files and internal gaps remain visible. Stale data, failed
+requests or internal gaps fail the job; a successful request alone does not prove
+complete coverage.
 
 REE consumes validated producer outputs; it must not recollect OMIE source data.
