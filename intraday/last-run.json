@@ -157,8 +157,22 @@
       "status": "not_published_404"
     }
   ],
-  "changed_source_files": 3,
+  "changed_source_files": 0,
   "end": "2026-10-05",
+  "health": {
+    "checked_at": "2026-10-04T17:13:09.447583+00:00",
+    "completeness": "partial_or_unconfirmed",
+    "empty_source_files": [
+      "marginalpibc_2026100101.1"
+    ],
+    "execution": "success",
+    "freshness": "current",
+    "internal_gap_files": [],
+    "latest_auction_file_date": "2026-10-03",
+    "missing_closed_date_sessions": [],
+    "policy": "Freshness requires an auction file dated yesterday or later. This is our operational allowance, not a verified publisher deadline; expected auction horizons/cancellations remain unconfirmed.",
+    "required_auction_file_date": "2026-10-03"
+  },
   "requests": 24,
   "start": "2026-10-02",
   "status": "completed_with_explicit_source_availability"
