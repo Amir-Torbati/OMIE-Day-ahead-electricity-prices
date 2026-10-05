@@ -5,38 +5,38 @@
     "PT"
   ],
   "counts": {
-    "omie_15min": 70848,
-    "omie_hourly": 65902,
-    "omie_native": 119038
+    "omie_15min": 71232,
+    "omie_hourly": 65998,
+    "omie_native": 119422
   },
-  "delivery_days": 1373,
+  "delivery_days": 1375,
   "files": {
     "omie_15min.parquet": {
-      "bytes": 666195,
-      "sha256": "21751d374bed3ba2e8284d5541cdc47336770fbeba72649226ab508404d33d7d"
+      "bytes": 670101,
+      "sha256": "99772a0a1b2897ebb111e416357669327c5174e758750699119b5d298a5ab738"
     },
     "omie_hourly.parquet": {
-      "bytes": 639958,
-      "sha256": "57cf97055e6aa1c7e47dbb429b2f565efa78d0c238e83415e7fb04b8750b1666"
+      "bytes": 640973,
+      "sha256": "28aebbd6039a9e35bee0db599ca90cee0d3d77bd7ced146225cd3ee18204e1db"
     },
     "omie_native.parquet": {
-      "bytes": 1067754,
-      "sha256": "b393608e410ccf60ae835769bb31db6dbd06e6c7f2ad6e49fb909a92c5afcb2d"
+      "bytes": 1070843,
+      "sha256": "9c726096c4b56947e9a3fd878855e341c73d3786a5e8670cc4279bbd421a06a6"
     },
     "omie_prices.duckdb": {
-      "bytes": 5255168,
-      "sha256": "e69d5645c79282c1404d8efb5bf5782da6905c7525a33326952405b0d7a92653"
+      "bytes": 5779456,
+      "sha256": "10fc69d9b1aa2a1f11397d073290495e661b3b30ba870f93028ac74495339f33"
     }
   },
   "first_day": "2023-01-01",
-  "last_day": "2026-10-04",
+  "last_day": "2026-10-06",
   "qa": {
     "duplicate_keys": 0,
     "missing_days": [],
     "null_prices": 0
   },
   "revision_policy": "Highest version present; scheduled refresh probes .1 and .2 for latest 3 delivery dates",
-  "source_fingerprint": "6509be721cd62be86f2e40fe1c8fae89ddd1ca1baf75aba6479540b49a6b2f6a",
+  "source_fingerprint": "707495969848bdb3fa27500f7c8fdc79f41925a611ae78bb8860d56b99baa451",
   "sources": [
     {
       "file": "marginalpdbc_20230101.1",
@@ -5529,6 +5529,14 @@
     {
       "file": "marginalpdbc_20261004.1",
       "sha256": "c52c651ff1bdefe31dcb37d494e586a35f8e407bbca55432997894485373ea43"
+    },
+    {
+      "file": "marginalpdbc_20261005.1",
+      "sha256": "98bf9417d29d9f56a79c1736a0519a71e395a7d3fae2177b1ab40c5aacea85d3"
+    },
+    {
+      "file": "marginalpdbc_20261006.1",
+      "sha256": "02bac8905d4de76494a3eccaff32814f64a9c78fb783f9611061a173a317cc24"
     }
   ],
   "status": "complete",
