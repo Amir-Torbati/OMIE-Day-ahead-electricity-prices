@@ -56,7 +56,17 @@
     },
     {
       "file": "marginalpibc_2026100701.1",
-      "status": "not_published_404"
+      "horizons": {
+        "2026-10-07": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
     },
     {
       "file": "marginalpibc_2026100701.2",
@@ -64,7 +74,17 @@
     },
     {
       "file": "marginalpibc_2026100702.1",
-      "status": "not_published_404"
+      "horizons": {
+        "2026-10-07": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
     },
     {
       "file": "marginalpibc_2026100702.2",
@@ -72,7 +92,17 @@
     },
     {
       "file": "marginalpibc_2026100703.1",
-      "status": "not_published_404"
+      "horizons": {
+        "2026-10-07": {
+          "first_period": 49,
+          "last_period": 96,
+          "periods": 48
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 96,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
     },
     {
       "file": "marginalpibc_2026100703.2",
@@ -127,23 +157,19 @@
       "status": "not_published_404"
     }
   ],
-  "changed_source_files": 0,
+  "changed_source_files": 3,
   "end": "2026-10-09",
   "health": {
-    "checked_at": "2026-10-07T23:37:32.872113+00:00",
+    "checked_at": "2026-10-08T17:54:44.822585+00:00",
     "completeness": "partial_or_unconfirmed",
     "empty_source_files": [
       "marginalpibc_2026100101.1"
     ],
     "execution": "success",
-    "freshness": "stale",
+    "freshness": "current",
     "internal_gap_files": [],
-    "latest_auction_file_date": "2026-10-06",
-    "missing_closed_date_sessions": [
-      "2026-10-07:1",
-      "2026-10-07:2",
-      "2026-10-07:3"
-    ],
+    "latest_auction_file_date": "2026-10-07",
+    "missing_closed_date_sessions": [],
     "policy": "Freshness requires an auction file dated yesterday or later. This is our operational allowance, not a verified publisher deadline; expected auction horizons/cancellations remain unconfirmed.",
     "required_auction_file_date": "2026-10-07"
   },
