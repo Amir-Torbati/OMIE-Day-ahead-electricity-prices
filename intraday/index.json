@@ -694,5 +694,53 @@
     },
     "retrieved_at": "2026-10-08T17:54:35.515936+00:00",
     "sha256": "e9c4b955ae4f4d138da63c6848141e032d64ad590163026f71da0151b214f422"
+  },
+  "marginalpibc_2026100801.1": {
+    "key": "raw/marginalpibc_2026100801.1.64a16cf12e0841396a6327b42d570fd4801f76e606b914bb4b10e10ff75e1b52.gz",
+    "qa": {
+      "horizons": {},
+      "internal_missing_periods": 0,
+      "rows": 0,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "empty_source_file"
+    },
+    "retrieved_at": "2026-10-09T17:28:34.243015+00:00",
+    "sha256": "64a16cf12e0841396a6327b42d570fd4801f76e606b914bb4b10e10ff75e1b52"
+  },
+  "marginalpibc_2026100802.1": {
+    "key": "raw/marginalpibc_2026100802.1.431d171b23b6fd4dd5c4abea2ed5f599a088b2a5f06c65e6b88d61edd0b42b2e.gz",
+    "qa": {
+      "horizons": {
+        "2026-10-08": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    "retrieved_at": "2026-10-09T17:28:35.753848+00:00",
+    "sha256": "431d171b23b6fd4dd5c4abea2ed5f599a088b2a5f06c65e6b88d61edd0b42b2e"
+  },
+  "marginalpibc_2026100803.1": {
+    "key": "raw/marginalpibc_2026100803.1.2a658616f709308aec78100b52d32bcceef6387fdf1be73856cec0fd7e900628.gz",
+    "qa": {
+      "horizons": {
+        "2026-10-08": {
+          "first_period": 49,
+          "last_period": 96,
+          "periods": 48
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 96,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    "retrieved_at": "2026-10-09T17:28:37.311079+00:00",
+    "sha256": "2a658616f709308aec78100b52d32bcceef6387fdf1be73856cec0fd7e900628"
   }
 }
