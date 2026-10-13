@@ -1,30 +1,6 @@
 {
   "attempts": [
     {
-      "file": "marginalpibc_2026101101.1",
-      "status": "not_published_404"
-    },
-    {
-      "file": "marginalpibc_2026101101.2",
-      "status": "not_published_404"
-    },
-    {
-      "file": "marginalpibc_2026101102.1",
-      "status": "not_published_404"
-    },
-    {
-      "file": "marginalpibc_2026101102.2",
-      "status": "not_published_404"
-    },
-    {
-      "file": "marginalpibc_2026101103.1",
-      "status": "not_published_404"
-    },
-    {
-      "file": "marginalpibc_2026101103.2",
-      "status": "not_published_404"
-    },
-    {
       "file": "marginalpibc_2026101201.1",
       "horizons": {
         "2026-10-12": {
@@ -125,30 +101,54 @@
     {
       "file": "marginalpibc_2026101403.2",
       "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026101501.1",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026101501.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026101502.1",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026101502.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026101503.1",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026101503.2",
+      "status": "not_published_404"
     }
   ],
-  "changed_source_files": 3,
-  "end": "2026-10-14",
+  "changed_source_files": 0,
+  "end": "2026-10-15",
   "health": {
-    "checked_at": "2026-10-13T18:22:52.047466+00:00",
+    "checked_at": "2026-10-13T23:19:05.542265+00:00",
     "completeness": "partial_or_unconfirmed",
     "empty_source_files": [
       "marginalpibc_2026100101.1",
       "marginalpibc_2026100801.1"
     ],
     "execution": "success",
-    "freshness": "current",
+    "freshness": "stale",
     "internal_gap_files": [],
     "latest_auction_file_date": "2026-10-12",
     "missing_closed_date_sessions": [
-      "2026-10-11:1",
-      "2026-10-11:2",
-      "2026-10-11:3"
+      "2026-10-13:1",
+      "2026-10-13:2",
+      "2026-10-13:3"
     ],
     "policy": "Freshness requires an auction file dated yesterday or later. This is our operational allowance, not a verified publisher deadline; expected auction horizons/cancellations remain unconfirmed.",
-    "required_auction_file_date": "2026-10-12"
+    "required_auction_file_date": "2026-10-13"
   },
   "requests": 24,
-  "start": "2026-10-11",
+  "start": "2026-10-12",
   "status": "completed_with_explicit_source_availability"
 }
