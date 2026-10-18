@@ -157,10 +157,10 @@
       "status": "not_published_404"
     }
   ],
-  "changed_source_files": 3,
+  "changed_source_files": 0,
   "end": "2026-10-19",
   "health": {
-    "checked_at": "2026-10-18T14:39:47.828797+00:00",
+    "checked_at": "2026-10-18T18:11:54.293071+00:00",
     "completeness": "partial_or_unconfirmed",
     "empty_source_files": [
       "marginalpibc_2026100101.1",
