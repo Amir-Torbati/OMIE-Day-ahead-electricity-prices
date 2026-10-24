@@ -1,8 +1,8 @@
 {
   "market": "OMIE intraday auctions",
-  "parquet_sha256": "aac7ce76594fa72a3b206df9f21bc0c0f31e298efcb10c67bbc0c78bd705cfea",
+  "parquet_sha256": "0e236ffa15ee3a4ae7fee13b7cc202d06218217865676aec68381ed263b94c99",
   "revision_policy": "Highest available file revision; same-name byte revisions retained by SHA; empty latest revisions remove older prices",
-  "rows": 12576,
+  "rows": 13056,
   "schema_version": 1,
   "sessions": [
     {
@@ -1117,6 +1117,48 @@
       "file": "marginalpibc_2026102203.1",
       "horizons": {
         "2026-10-22": {
+          "first_period": 49,
+          "last_period": 96,
+          "periods": 48
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 96,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026102301.1",
+      "horizons": {
+        "2026-10-23": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026102302.1",
+      "horizons": {
+        "2026-10-23": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026102303.1",
+      "horizons": {
+        "2026-10-23": {
           "first_period": 49,
           "last_period": 96,
           "periods": 48
