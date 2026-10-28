@@ -1654,5 +1654,59 @@
     },
     "retrieved_at": "2026-10-27T18:04:50.905999+00:00",
     "sha256": "a33fe08d571b3d2c0f1ecab6c50e6a60a8f4c4834e8d6b7c005e73704b3a87eb"
+  },
+  "marginalpibc_2026102701.1": {
+    "key": "raw/marginalpibc_2026102701.1.c4e4c0fa06c48a038890f608548e63853559379616409bb581d65f0caf6618b3.gz",
+    "qa": {
+      "horizons": {
+        "2026-10-27": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    "retrieved_at": "2026-10-28T18:23:36.345934+00:00",
+    "sha256": "c4e4c0fa06c48a038890f608548e63853559379616409bb581d65f0caf6618b3"
+  },
+  "marginalpibc_2026102702.1": {
+    "key": "raw/marginalpibc_2026102702.1.a9f718d91be4ebff076b6748abab990f7a9f78bc037d4be81d49259465373765.gz",
+    "qa": {
+      "horizons": {
+        "2026-10-27": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    "retrieved_at": "2026-10-28T18:23:37.979476+00:00",
+    "sha256": "a9f718d91be4ebff076b6748abab990f7a9f78bc037d4be81d49259465373765"
+  },
+  "marginalpibc_2026102703.1": {
+    "key": "raw/marginalpibc_2026102703.1.6af562f5036e8a59364c2844e066ac63d4dbf20a087ee3ba1a26cae1bd3a91c5.gz",
+    "qa": {
+      "horizons": {
+        "2026-10-27": {
+          "first_period": 49,
+          "last_period": 96,
+          "periods": 48
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 96,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    "retrieved_at": "2026-10-28T18:23:39.643049+00:00",
+    "sha256": "6af562f5036e8a59364c2844e066ac63d4dbf20a087ee3ba1a26cae1bd3a91c5"
   }
 }
