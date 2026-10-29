@@ -1708,5 +1708,53 @@
     },
     "retrieved_at": "2026-10-28T18:23:39.643049+00:00",
     "sha256": "6af562f5036e8a59364c2844e066ac63d4dbf20a087ee3ba1a26cae1bd3a91c5"
+  },
+  "marginalpibc_2026102801.1": {
+    "key": "raw/marginalpibc_2026102801.1.64a16cf12e0841396a6327b42d570fd4801f76e606b914bb4b10e10ff75e1b52.gz",
+    "qa": {
+      "horizons": {},
+      "internal_missing_periods": 0,
+      "rows": 0,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "empty_source_file"
+    },
+    "retrieved_at": "2026-10-29T18:32:53.807636+00:00",
+    "sha256": "64a16cf12e0841396a6327b42d570fd4801f76e606b914bb4b10e10ff75e1b52"
+  },
+  "marginalpibc_2026102802.1": {
+    "key": "raw/marginalpibc_2026102802.1.f92965da5ceb8cafdac65a8ee4b28ceaa4a389b302d8aa46c28bddb0cdb04469.gz",
+    "qa": {
+      "horizons": {
+        "2026-10-28": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    "retrieved_at": "2026-10-29T18:32:55.540697+00:00",
+    "sha256": "f92965da5ceb8cafdac65a8ee4b28ceaa4a389b302d8aa46c28bddb0cdb04469"
+  },
+  "marginalpibc_2026102803.1": {
+    "key": "raw/marginalpibc_2026102803.1.1645eccb9643ed596d9672ca8264ca1bff89ae02a3c27c8cb9210bc07038fb73.gz",
+    "qa": {
+      "horizons": {
+        "2026-10-28": {
+          "first_period": 49,
+          "last_period": 96,
+          "periods": 48
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 96,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    "retrieved_at": "2026-10-29T18:32:57.295513+00:00",
+    "sha256": "1645eccb9643ed596d9672ca8264ca1bff89ae02a3c27c8cb9210bc07038fb73"
   }
 }
