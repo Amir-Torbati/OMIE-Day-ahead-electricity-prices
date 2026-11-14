@@ -2566,5 +2566,41 @@
     },
     "retrieved_at": "2026-11-13T01:12:07.493939+00:00",
     "sha256": "4ce0b74079b7fb6db071f36685366bfcb10bbc8b3de6d95ca9ce271ca6ac2a69"
+  },
+  "marginalpibc_2026111302.1": {
+    "key": "raw/marginalpibc_2026111302.1.8b67d6fd609e8c2497bdb96899fcc586aa6dd85ab1f01acfd738ea7385c5a4d5.gz",
+    "qa": {
+      "horizons": {
+        "2026-11-13": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    "retrieved_at": "2026-11-14T00:55:06.942731+00:00",
+    "sha256": "8b67d6fd609e8c2497bdb96899fcc586aa6dd85ab1f01acfd738ea7385c5a4d5"
+  },
+  "marginalpibc_2026111303.1": {
+    "key": "raw/marginalpibc_2026111303.1.c2e58211963535eab961c2aed405d851abdf985931b7ce7141b116202309142e.gz",
+    "qa": {
+      "horizons": {
+        "2026-11-13": {
+          "first_period": 49,
+          "last_period": 96,
+          "periods": 48
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 96,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    "retrieved_at": "2026-11-14T00:55:08.411461+00:00",
+    "sha256": "c2e58211963535eab961c2aed405d851abdf985931b7ce7141b116202309142e"
   }
 }
