@@ -1,8 +1,8 @@
 {
   "market": "OMIE intraday auctions",
-  "parquet_sha256": "4ea8d816a122ec99f57da76cf674f85079ddbb4d9b958e8a83dbb482da951d51",
+  "parquet_sha256": "b316ce5dd5d69e4729be768c10a6f5010745c19713c00b7ea8f37d5a401c707a",
   "revision_policy": "Highest available file revision; same-name byte revisions retained by SHA; empty latest revisions remove older prices",
-  "rows": 22576,
+  "rows": 22768,
   "schema_version": 1,
   "sessions": [
     {
@@ -1994,6 +1994,20 @@
       },
       "internal_missing_periods": 0,
       "rows": 96,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    {
+      "file": "marginalpibc_2026111301.1",
+      "horizons": {
+        "2026-11-13": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
       "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
       "status": "validated_published_horizon"
     },

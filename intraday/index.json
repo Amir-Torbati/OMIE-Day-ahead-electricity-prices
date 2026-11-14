@@ -2567,6 +2567,24 @@
     "retrieved_at": "2026-11-13T01:12:07.493939+00:00",
     "sha256": "4ce0b74079b7fb6db071f36685366bfcb10bbc8b3de6d95ca9ce271ca6ac2a69"
   },
+  "marginalpibc_2026111301.1": {
+    "key": "raw/marginalpibc_2026111301.1.aa75031fdc45857ee861baac8d2ed73ebe1a73e72424bd4431efba6d68d9e50f.gz",
+    "qa": {
+      "horizons": {
+        "2026-11-13": {
+          "first_period": 1,
+          "last_period": 96,
+          "periods": 96
+        }
+      },
+      "internal_missing_periods": 0,
+      "rows": 192,
+      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
+      "status": "validated_published_horizon"
+    },
+    "retrieved_at": "2026-11-14T18:16:11.507726+00:00",
+    "sha256": "aa75031fdc45857ee861baac8d2ed73ebe1a73e72424bd4431efba6d68d9e50f"
+  },
   "marginalpibc_2026111302.1": {
     "key": "raw/marginalpibc_2026111302.1.8b67d6fd609e8c2497bdb96899fcc586aa6dd85ab1f01acfd738ea7385c5a4d5.gz",
     "qa": {
