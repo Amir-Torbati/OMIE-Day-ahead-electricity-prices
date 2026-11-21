@@ -5,38 +5,38 @@
     "PT"
   ],
   "counts": {
-    "omie_15min": 80072,
-    "omie_hourly": 68208,
-    "omie_native": 128262
+    "omie_15min": 80264,
+    "omie_hourly": 68256,
+    "omie_native": 128454
   },
-  "delivery_days": 1421,
+  "delivery_days": 1422,
   "files": {
     "omie_15min.parquet": {
-      "bytes": 744923,
-      "sha256": "43e68b8e56af2b55500b0c2d5383642e0216e34fb119e69221379e0152f3228b"
+      "bytes": 746308,
+      "sha256": "51f398000dde507af057931b6229e00634cf74ab456c4220797f173bda12bfad"
     },
     "omie_hourly.parquet": {
-      "bytes": 663769,
-      "sha256": "c3e7edbc3f36d6f405f461edd22064774ee623371d7f1d60f0ea0301df65e546"
+      "bytes": 664233,
+      "sha256": "b159d9533da5e8fed8c827501e0ec6b249c7bf70fa234b2f4ca9ec4070536787"
     },
     "omie_native.parquet": {
-      "bytes": 1138986,
-      "sha256": "222f72df5db767163b8775ad67441dd3f57822472e5df51c34a0aecea14ea714"
+      "bytes": 1140334,
+      "sha256": "1ae0ee534ff928af0f928ea4814bd0182f660689a89b3b48b034d026914390ca"
     },
     "omie_prices.duckdb": {
-      "bytes": 6303744,
-      "sha256": "26d83d20a84e5928d1121565ef1b4d7d6d5f291c9f148d4d9f3a4c4631f2901e"
+      "bytes": 5779456,
+      "sha256": "64ace267e2ceb51614aebbf3024fc06410034618b2c152987342614cff6bbb6f"
     }
   },
   "first_day": "2023-01-01",
-  "last_day": "2026-11-21",
+  "last_day": "2026-11-22",
   "qa": {
     "duplicate_keys": 0,
     "missing_days": [],
     "null_prices": 0
   },
   "revision_policy": "Highest version present; scheduled refresh probes .1 and .2 for latest 3 delivery dates",
-  "source_fingerprint": "493367a15c140b4668a67ee08897931e1861a464daa57f04c2f6320d5b28c074",
+  "source_fingerprint": "ccd34d2305ef13593d9072530023341554fa306319f4775ba21f175bf760d7d3",
   "sources": [
     {
       "file": "marginalpdbc_20230101.1",
@@ -5721,6 +5721,10 @@
     {
       "file": "marginalpdbc_20261121.1",
       "sha256": "dc6219b9645612d482b2f0d9152264e0f5155bdf6e89c8cb39f5f28cf4444298"
+    },
+    {
+      "file": "marginalpdbc_20261122.1",
+      "sha256": "50e44250b8ffb178bd75db98fe63bf0a20a4314fc32f5fd589dbf388fb502f2c"
     }
   ],
   "status": "complete",
