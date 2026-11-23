@@ -1,60 +1,6 @@
 {
   "attempts": [
     {
-      "file": "marginalpibc_2026112001.1",
-      "horizons": {
-        "2026-11-20": {
-          "first_period": 1,
-          "last_period": 96,
-          "periods": 96
-        }
-      },
-      "internal_missing_periods": 0,
-      "rows": 192,
-      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
-      "status": "validated_published_horizon"
-    },
-    {
-      "file": "marginalpibc_2026112001.2",
-      "status": "not_published_404"
-    },
-    {
-      "file": "marginalpibc_2026112002.1",
-      "horizons": {
-        "2026-11-20": {
-          "first_period": 1,
-          "last_period": 96,
-          "periods": 96
-        }
-      },
-      "internal_missing_periods": 0,
-      "rows": 192,
-      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
-      "status": "validated_published_horizon"
-    },
-    {
-      "file": "marginalpibc_2026112002.2",
-      "status": "not_published_404"
-    },
-    {
-      "file": "marginalpibc_2026112003.1",
-      "horizons": {
-        "2026-11-20": {
-          "first_period": 49,
-          "last_period": 96,
-          "periods": 48
-        }
-      },
-      "internal_missing_periods": 0,
-      "rows": 96,
-      "scope": "Published horizon only; session-specific expected horizon and cancelled auctions not independently certified",
-      "status": "validated_published_horizon"
-    },
-    {
-      "file": "marginalpibc_2026112003.2",
-      "status": "not_published_404"
-    },
-    {
       "file": "marginalpibc_2026112101.1",
       "horizons": {
         "2026-11-21": {
@@ -155,12 +101,36 @@
     {
       "file": "marginalpibc_2026112303.2",
       "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026112401.1",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026112401.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026112402.1",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026112402.2",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026112403.1",
+      "status": "not_published_404"
+    },
+    {
+      "file": "marginalpibc_2026112403.2",
+      "status": "not_published_404"
     }
   ],
-  "changed_source_files": 3,
-  "end": "2026-11-23",
+  "changed_source_files": 0,
+  "end": "2026-11-24",
   "health": {
-    "checked_at": "2026-11-22T19:50:09.835337+00:00",
+    "checked_at": "2026-11-23T00:57:46.566090+00:00",
     "completeness": "partial_or_unconfirmed",
     "empty_source_files": [
       "marginalpibc_2026100101.1",
@@ -169,14 +139,18 @@
       "marginalpibc_2026102801.1"
     ],
     "execution": "success",
-    "freshness": "current",
+    "freshness": "stale",
     "internal_gap_files": [],
     "latest_auction_file_date": "2026-11-21",
-    "missing_closed_date_sessions": [],
+    "missing_closed_date_sessions": [
+      "2026-11-22:1",
+      "2026-11-22:2",
+      "2026-11-22:3"
+    ],
     "policy": "Freshness requires an auction file dated yesterday or later. This is our operational allowance, not a verified publisher deadline; expected auction horizons/cancellations remain unconfirmed.",
-    "required_auction_file_date": "2026-11-21"
+    "required_auction_file_date": "2026-11-22"
   },
   "requests": 24,
-  "start": "2026-11-20",
+  "start": "2026-11-21",
   "status": "completed_with_explicit_source_availability"
 }
